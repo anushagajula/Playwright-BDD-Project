@@ -1,5 +1,0 @@
-App URL : https://suite8demo.suiteondemand.com/
-Doc - https://docs.suitecrm.com/user/ 
-Credentials
-Username : will
-Password : will
