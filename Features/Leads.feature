@@ -53,12 +53,12 @@ Scenario Outline: Verify user able to create Lead with invalid details
 @positive
 Scenario: Verify user can create a Lead with valid mandatory fields
     Given user is on Create Lead page
-    When user clicks on Save button by entering valid data in all mandatory fields
+    When user clicks on Save button by entering valid data in "page" withall mandatory fields
     Then user should be redirected to the new Lead record page with features
 
 Scenario: Verify user able to see popup to cancel Lead with valid details
     Given user is on Create Lead page
-    When user clicks on Cancel button by entering valid data in all mandatory fields
+    When user clicks on Cancel button by entering valid data in "page" withall mandatory fields
     Then User able to see popup to cancel Lead creation
 
 Scenario: Verify user able to cancel Lead creation
@@ -68,7 +68,7 @@ Scenario: Verify user able to cancel Lead creation
 
 Scenario: Verify user able to edit new lead record fields
     Given user is on new Lead record page
-    When user clicks on Edit button
+    When user clicks on Edit button on the "page"
     Then User able to update new lead record fields
 
 Scenario: Verify user able to see insights of new lead record

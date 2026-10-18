@@ -1,5 +1,6 @@
 
-import { createBdd, test } from 'playwright-bdd';
+import { createBdd } from 'playwright-bdd';
+import { test } from '../Fixtures/fixture.js';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -56,7 +57,7 @@ When('user clicks on Save button by entering {string}', async ({ page }, fieldna
   // Enter invalid data for the requested field, then click Save.
 });
 
-When('user clicks on Save button by entering valid data in all mandatory fields', async ({ page }) => {
+When('user clicks on Save button by entering valid data in {string} withall mandatory fields', async ({ page }, pageName) => {
   // Enter valid values in the required fields, then click Save.
 });
 
@@ -64,7 +65,7 @@ Then('user should be redirected to the new Lead record page with features', asyn
   // Assert that the browser is on the new Lead record page with the expected features.
 });
 
-When('user clicks on Cancel button by entering valid data in all mandatory fields', async ({}) => {
+When('user clicks on Cancel button by entering valid data in {string} withall mandatory fields', async ({}, pageName) => {
   // Step: When user clicks on Cancel button by entering valid data in all mandatory fields
   // From: Features\Leads.feature:61:5
 });
@@ -94,7 +95,7 @@ Given('user is on new Lead record page', async ({}) => {
   // From: Features\Leads.feature:70:5
 });
 
-When('user clicks on Edit button', async ({}) => {
+When('user clicks on Edit button on the {string}', async ({}, pageName) => {
   // Step: When user clicks on Edit button
   // From: Features\Leads.feature:71:5
 });
