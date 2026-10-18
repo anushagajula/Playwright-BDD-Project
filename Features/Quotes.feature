@@ -24,7 +24,7 @@ Feature: Manage Quotes
 
     Scenario: Verify user can see Create Quote page with features
     Given user is on Create Quote page
-    When User views features on Create Quote page
+    When User views features on Quote page
     Then user should see the following features in the Create Quote page is Displayed:
       | features        |
       | Overview        |
@@ -96,4 +96,63 @@ Scenario: Verify user able to view change log of new Quote  record
     Given user is on new Quote record with actions dropdown
     When user clicks on View Change Log option 
     Then User able to see change log of the new Quote record
-    
+
+Scenario: verify user able to see features on View Quotes page
+    Given user is on View Quotes page
+    When User views features on Quotes page
+    Then user should see the following features in the View Quotes page:
+      | features        |
+      | Num       |
+      | Title          |
+      | Quote Stage          |
+      | filter            |
+      | Contacts           |
+      | Valid Until           |
+      | Account |
+      |Grand Total|
+  
+Scenario: Verify User able to see Bulk Action drop down on View Quotes page
+    Given user is on View Quotes page
+    When User clicks on Bulk Action drop down
+    Then User able to see the following options in the Bulk Action drop down:
+      | Bulk Action drop down options |
+      | Delete                        |
+      | Merge                         |
+      | Mass Update                   |
+      |Export                         |
+
+Scenario: Verify user can filter Quotes records
+    Given user is on View Quotes page 
+    When User clicks on Filter 
+    Then User should see filter options to filter quotes records
+
+Scenario: Verify user can enter Title in the filter
+    Given user is on the View Quotes page with filter options
+    When user enters a title in the filter
+    Then title should be displayed in the filter field
+
+Scenario: Verify user can filter Quotes records by Title
+    Given user is on View Quotes page with specified title on filter options
+    When user clicks the search button
+    Then User should see quotes records matching the specified title
+
+Scenario: Verify user can import a valid csv file  with choose file button
+    Given User is on  import page 
+    When User clicks choose file button with valid csv file
+    Then User should see selected file on page
+
+Scenario: Verify user imported with invalid file
+    Given User is on  import page 
+    When User clicks choose file button with invalid file
+    Then User should see popup with error message
+
+Scenario: Verify user imported with no file
+    Given User is on  import page 
+    When User clicks next button
+    Then User should see error message "Missing required fields: Select a file to upload."
+
+
+Scenario: Verify the recent opened quote appears under Recently Viewed option
+    Given user is on Quotes page
+    When user mouse hover on Recently Viewed option
+    Then user should see the recent opened quote appears in Recently Viewed option

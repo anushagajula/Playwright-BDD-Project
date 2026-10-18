@@ -42,10 +42,6 @@ Then('user should see the following features in the Create Lead page is Displaye
   // From: Features\Leads.feature:29:5
 });
 
-Given('user is on Create Lead page', async ({}) => {
-  // Step: Given user is on Create Lead page
-  // From: Features\Leads.feature:39:5
-});
 
 When('user clicks on Save button without entering any details', async ({}) => {
   // Step: When user clicks on Save button without entering any details

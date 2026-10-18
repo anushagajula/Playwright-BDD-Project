@@ -120,7 +120,7 @@ Scenario Outline: Verify vCard validation with different files
 
 Scenario: verify user able to see features on View Leads page
     Given user is on View Leads page
-    When User views features
+    When User views features on Create Lead page
     Then user should see the following features in the View Leads page:
       | features        |
       | Name        |
