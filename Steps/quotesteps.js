@@ -1,4 +1,5 @@
-import { createBdd, test } from 'playwright-bdd';
+import { createBdd } from 'playwright-bdd';
+import { test } from '../Fixtures/fixture.js';
 
 const { Given, When, Then } = createBdd(test);
 When('User views features on Quote page', async ({}) => {
@@ -45,6 +46,12 @@ Given('user is on Create Quote page', async ({}) => {
   // Step: Given user is on Create Quote page
   // From: Features\Quotes.feature:26:5
 });
+When('user clicks on Save button by entering valid data in all mandatory fields', async ({}) => {
+  // Add valid values to the mandatory fields, then click Save.
+});
+When('user clicks on Cancel button by entering valid data in all mandatory fields', async ({}) => {
+  // Add valid values to the mandatory fields, then click Cancel.
+});
 Then('user should be redirected to the new Quote record page with features', async ({}) => {
   // Step: Then user should be redirected to the new Quote record page with features
   // From: Features\Quotes.feature:57:5
@@ -74,7 +81,10 @@ Given('user is on new Quote record page', async ({}) => {
   // Step: Given user is on new Quote record page
   // From: Features\Quotes.feature:70:5
 });
-
+When('user clicks on Edit button', async ({}) => {
+  // Step: When user clicks on Edit button
+  // From: Features\Quotes.feature:71:5
+});
 Then('User able to update new Quote record fields', async ({}) => {
   // Step: Then User able to update new Quote record fields
   // From: Features\Quotes.feature:72:5

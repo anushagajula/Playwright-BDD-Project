@@ -5,7 +5,7 @@ import { defineBddConfig } from 'playwright-bdd';
 
 const testDir = defineBddConfig({
   features: 'Features/**/*.feature',
-  steps: ['Steps/**/*.js', 'Hooks/**/*.js'],
+  steps: ['Steps/**/*.js', 'Hooks/**/*.js', 'Fixtures/**/*.js'],
   //tags: '@login'
 });
 
@@ -94,4 +94,3 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-
