@@ -7,29 +7,29 @@ import log from '../Utils/logger.js';
 const { BeforeAll, Before, After } = createBdd(test);
 
 BeforeAll(async () => {
-  log.info('========== One-time setup started ==========');
+    log.info('========== One-time setup started ==========');
 
-  expect(process.env.BASE_URL).toBeTruthy();
-  expect(process.env.SCRM_URL).toBeTruthy();
-  expect(process.env.SCRM_USERNAME).toBeTruthy();
-  expect(process.env.SCRM_PASSWORD).toBeTruthy();
 
-  log.info('Environment variables verified');
+    expect(process.env.SCRM_URL).toBeTruthy();
+    expect(process.env.SCRM_USERNAME).toBeTruthy();
+    expect(process.env.SCRM_PASSWORD).toBeTruthy();
+
+    log.info('Environment variables verified');
 });
 
 Before(async ({ page }) => {
-  log.info('Opening SuiteCRM for this test');
+    log.info('Opening SuiteCRM for this test');
 
-  await page.goto('/');
+    await page.goto('/');
 
-  log.info(`Current URL: ${page.url()}`);
+    log.info(`Current URL: ${page.url()}`);
 
-  await expect(page.getByLabel(/username/i)).toBeVisible();
-  await expect(page.getByLabel(/password/i)).toBeVisible();
+    await expect(page.getByLabel(/username/i)).toBeVisible();
+    await expect(page.getByLabel(/password/i)).toBeVisible();
 
-  log.info('Login page verified');
+    log.info('Login page verified');
 });
 
 After(async () => {
-  log.info('Test finished');
+    log.info('Test finished');
 });
