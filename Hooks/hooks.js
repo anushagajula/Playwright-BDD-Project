@@ -4,48 +4,32 @@ import { test } from '../Fixtures/fixture.js';
 import { expect } from '@playwright/test';
 import log from '../Utils/logger.js';
 
-const { Before, After } = createBdd(test);
+const { BeforeAll, Before, After } = createBdd(test);
 
-Before(async ({ page }) => {
-  log.info('Starting test');
-  console.log('Before hook executed');
+BeforeAll(async () => {
+  log.info('========== One-time setup started ==========');
 
-  // Verify environment variables
-  expect(process.env.BASE_URL, 'BASE_URL is missing in .env').toBeTruthy();
+  expect(process.env.BASE_URL).toBeTruthy();
+  expect(process.env.SCRM_URL).toBeTruthy();
+  expect(process.env.SCRM_USERNAME).toBeTruthy();
+  expect(process.env.SCRM_PASSWORD).toBeTruthy();
 
-  expect(
-    process.env.SUITECRM_USERNAME,
-    'SUITECRM_USERNAME is missing in .env'
-  ).toBeTruthy();
-
-  expect(
-    process.env.SUITECRM_PASSWORD,
-    'SUITECRM_PASSWORD is missing in .env'
-  ).toBeTruthy();
-
-  // Verify browser page initialization
-  expect(page).toBeTruthy();
-  log.info('Browser page initialized');
-
-  // Open application
-  await page.goto('/');
-
-  console.log('Current URL:', page.url());
-  log.info(`Current URL: ${page.url()}`);
-
-  // Verify URL
-  const baseURL = process.env.BASE_URL.replace(/\/+$/, '');
-  expect(page.url().startsWith(baseURL)).toBeTruthy();
-
-  log.info('Application opened successfully');
+  log.info('Environment variables verified');
 });
 
-After(async ({ page }) => {
-  log.info('Finished test');
+Before(async ({ page }) => {
+  log.info('Opening SuiteCRM for this test');
 
-  // Optional screenshot for debugging
-  // await page.screenshot({
-  //   path: 'test-results/final-page.png',
-  //   fullPage: true,
-  // });
+  await page.goto('/');
+
+  log.info(`Current URL: ${page.url()}`);
+
+  await expect(page.getByLabel(/username/i)).toBeVisible();
+  await expect(page.getByLabel(/password/i)).toBeVisible();
+
+  log.info('Login page verified');
+});
+
+After(async () => {
+  log.info('Test finished');
 });
