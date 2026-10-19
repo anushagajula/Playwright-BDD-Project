@@ -9,7 +9,6 @@ const { BeforeAll, Before, After } = createBdd(test);
 BeforeAll(async () => {
   log.info('========== One-time setup started ==========');
 
-  expect(process.env.BASE_URL).toBeTruthy();
   expect(process.env.SCRM_URL).toBeTruthy();
   expect(process.env.SCRM_USERNAME).toBeTruthy();
   expect(process.env.SCRM_PASSWORD).toBeTruthy();
