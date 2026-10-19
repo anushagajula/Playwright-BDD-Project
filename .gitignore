@@ -13,4 +13,5 @@ test-results/
 allure-results/
 allure-report/
 screenshots/
+.features-gen/
 
