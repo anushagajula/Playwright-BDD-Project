@@ -1,4 +1,5 @@
 import { createBdd } from 'playwright-bdd';
+import { test } from '../Fixtures/fixture.js';
 
 const { Given, When, Then } = createBdd();
 

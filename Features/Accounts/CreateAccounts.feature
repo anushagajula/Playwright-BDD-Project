@@ -19,7 +19,7 @@ Feature: Accounts and Create Account
     When User clicks the Create Account quick action under the Accounts module
     Then The Create Account page should be displayed
 
-  
+
   @Functional @Positive
   Scenario Outline: Create an account using NAME, WEBSITE, and OFFICE PHONE
     Given User should be on the Create Account page
@@ -54,9 +54,3 @@ Feature: Accounts and Create Account
     Examples:
       | TestData  |
       | ValidEmail |
-                        
-
-  
-
-         
-  

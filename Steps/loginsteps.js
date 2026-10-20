@@ -1,5 +1,5 @@
 import { createBdd } from 'playwright-bdd';
-
+import { test } from '../Fixtures/fixture.js';
 const { Given, When, Then } = createBdd();
 Given('User should be in SuiteCRM URL page', async ({ page }) => {
 
