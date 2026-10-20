@@ -1,3 +1,16 @@
+# Dependencies
 node_modules/
-reports/
-.playwright-artifacts/
+
+# Environment variables
+.env
+
+# Logs
+Logs/
+
+# Playwright reports and test results
+playwright-report/
+test-results/
+allure-results/
+allure-report/
+screenshots/
+.features-gen/
