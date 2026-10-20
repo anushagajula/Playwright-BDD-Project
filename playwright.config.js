@@ -5,11 +5,8 @@ import { defineBddConfig } from 'playwright-bdd';
 
 const testDir = defineBddConfig({
   features: 'Features/**/*.feature',
-  steps: [
-    'Steps/**/*.steps.js', 
-    'Hooks/**/*.js', 
-    'Fixtures/**/*.js'],
-    //tags: '@login'
+  steps: ['Steps/**/*.js', 'Hooks/**/*.js'],
+  //tags: '@login'
 });
 
 /**
@@ -44,7 +41,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-     baseURL: process.env.BASE_URL,
+     baseURL: process.env.SCRM_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
