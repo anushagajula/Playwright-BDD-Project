@@ -15,6 +15,8 @@ export class LoginPage {
         this.spinner = page.locator('app-full-page-spinner');
         //homepage locator
         this.homepage = page.getByRole('link');
+        this.dashboardLink = page.locator('iframe').contentFrame().getByRole('link', { name: 'SUITECRM DASHBOARD' });
+
     }
 
     async navigateToLoginPage() {
@@ -52,8 +54,7 @@ export class LoginPage {
         await expect(this.emptycredentials).toBeVisible();
     }
     async verifyHomePage() {
-        await expect(this.homepage).toBeVisible({ timeout: 15000 });
 
-        await expect(this.homepage).toBeVisible();
+        await expect(this.dashboardLink).toBeVisible();
     }
 }

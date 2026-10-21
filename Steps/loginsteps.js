@@ -13,7 +13,7 @@ When('User should be in SuiteCRM URL page', async ({ page }) => {
     await expect(page).toHaveURL(/#\/Login$/);
 });
 
-Then('User should be able to see {string}', async ({ loginPage }, element) => {
+Then('User should be able to see all login page components', async ({ loginPage }) => {
     await loginPage.verifyLoginScreen();
 });
 

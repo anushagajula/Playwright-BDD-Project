@@ -2,16 +2,9 @@
 Feature: Login Page Validation
 
   @NonFunctional @Positive
-  Scenario Outline: Verify login page components visibility
+  Scenario: Verify login page components visibility
     Given User is on SuiteCRM login page
-    Then User should be able to see "<Element>"
-
-    Examples:
-      | Element        |
-      | SuiteCRM Logo  |
-      | Username field |
-      | Password field |
-      | Login button   |
+    Then User should be able to see all login page components
 
   @Functional @Positive
   Scenario Outline: Verify login with valid credentials
