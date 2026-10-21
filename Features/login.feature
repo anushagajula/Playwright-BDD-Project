@@ -16,6 +16,10 @@ Feature: Login Page Validation
       | TestData |
       | ValidUser |
 
+  @Functional @Positive
+  Scenario: Reusable one-step login
+    Given User logs in with valid credentials
+
   @Functional @Negative
   Scenario Outline: Verify login validation with invalid and empty credentials
     Given User should be in SuiteCRM URL page

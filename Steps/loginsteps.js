@@ -8,6 +8,12 @@ Given('User is on SuiteCRM login page', async ({ page }) => {
     await expect(page).toHaveURL(/#\/Login$/);
 });
 
+Given('User logs in with valid credentials', async ({ loginPage }) => {
+    const credentials = testData.ValidUser;
+    await loginPage.login(credentials.username, credentials.password);
+    await loginPage.verifyHomePage();
+});
+
 When('User should be in SuiteCRM URL page', async ({ page }) => {
     //await expect(page).toHaveURL('/');
     await expect(page).toHaveURL(/#\/Login$/);
