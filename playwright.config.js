@@ -3,9 +3,11 @@ import 'dotenv/config';
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
 
+
 const testDir = defineBddConfig({
   features: 'Features/**/*.feature',
-  steps: ['Steps/**/*.js', 'Hooks/**/*.js'],
+  steps: ['Steps/**/*.js', 'Hooks/**/*.js', 'Fixtures/fixture.js',],
+
   //tags: '@login'
 });
 
@@ -22,7 +24,7 @@ const testDir = defineBddConfig({
  */
 export default defineConfig({
   testDir,
- //testDir,
+  //testDir,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -36,12 +38,12 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-     baseURL: process.env.SCRM_URL,
+    baseURL: process.env.SCRM_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    screenshot:'on',
-    video:'retain-on-failure',
+    screenshot: 'on',
+    video: 'retain-on-failure',
   },
 
   /* Configure projects for major browsers */

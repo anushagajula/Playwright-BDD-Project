@@ -27,12 +27,12 @@ Then('The Create Account page should be displayed', async ({ page }) => {
     // TODO: Verify the Create Account page.
 });
 
-When('User enters the account details:', async ({ page }, table) => {
-    // TODO: Enter the account details from the Gherkin table.
-});
+When('User enters the account details and clicks the Save button:', async ({ page }, table) => {
+    for (const { Field: field, TestData: value } of table.hashes()) {
+        await page.getByLabel(new RegExp(`^${field}$`, 'i')).fill(value);
+    }
 
-When('User clicks the Save button', async ({ page }) => {
-    // TODO: Click Save.
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
 });
 
 Then('The account should be created with the entered NAME, WEBSITE, and OFFICE PHONE', async ({ page }) => {

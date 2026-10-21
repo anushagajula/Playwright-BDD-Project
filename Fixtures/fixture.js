@@ -1,5 +1,6 @@
-import { test as base, expect } from '@playwright/test';
-import { LoginPage } from '../Pages/LoginPage.js';
+import { test as base } from 'playwright-bdd';
+import { expect } from '@playwright/test';
+import { LoginPage } from '../Pages/loginpage.js';
 
 
 export const test = base.extend({
@@ -8,7 +9,7 @@ export const test = base.extend({
     await use(loginPage);
   }
 
-  
+
 });
 
 export { expect };

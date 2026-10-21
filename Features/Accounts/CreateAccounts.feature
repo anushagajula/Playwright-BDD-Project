@@ -2,8 +2,8 @@
 Feature: Accounts and Create Account
 
   @Functional @Positive
-  Scenario Outline: Verify login and Accounts quick actions
-    Given User should be in SuiteCRM URL page
+  Scenario Outline: Verify  Accounts quick actions
+    Given User should be on the home page
     When User logs in using valid credentials and opens the Accounts module
     Then User should see the "<Page>" and the "<QuickAction>" quick action
 
@@ -23,12 +23,11 @@ Feature: Accounts and Create Account
   @Functional @Positive
   Scenario Outline: Create an account using NAME, WEBSITE, and OFFICE PHONE
     Given User should be on the Create Account page
-    When User enters the account details:
+    When User enters the account details and clicks the Save button:
       | Field        | TestData             |
       | NAME         | <NameTestData>       |
       | WEBSITE      | <WebsiteTestData>    |
       | OFFICE PHONE | <OfficePhoneTestData> |
-    When User clicks the Save button
     Then The account should be created with the entered NAME, WEBSITE, and OFFICE PHONE
 
     Examples:
