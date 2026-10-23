@@ -1,6 +1,8 @@
 import { expect } from '@playwright/test';
 import log from '../Utils/logger.js';
 import testData  from '../Testdata/testdata.json' with { type: 'json' };
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 export class LeadPage {
   constructor(page) {
@@ -59,6 +61,37 @@ this.viewChangelogButton = this.page.getByText('View Change Log', { exact: true 
   name: 'Actions',
   exact: true
 });
+this.chooseFileButton=this.page.getByRole('button', {
+  name: 'vcard',
+  exact: true
+});
+this.vcardFrame = this.page.frameLocator('iframe:visible');
+
+this.selectedFileName = this.vcardFrame.locator('input[type="file"]');
+this.importButton = this.vcardFrame.getByRole('button', {
+  name: 'Import vCard',
+  exact: true
+});
+this.firstLeadSelectionCell = this.page
+  .getByRole('row')
+  .nth(1)
+  .locator('td')
+  .first();
+
+this.headerBulkActionButton = this.page
+  .locator('scrm-table-header')
+  .getByRole('button', { name: 'Bulk Action', exact: true });
+
+this.selectRecordsMenuButton = this.page.locator(
+  'scrm-table-header button[aria-hidden="true"]'
+);
+this.filterButton = this.page.getByRole('button', {
+  name: 'Filter',
+  exact: true
+});
+this.lastNameFilter = this.page
+  .getByText('Last Name', { exact: true })
+  .locator('xpath=following::input[1]');
 // this.email = this.page.getByLabel('EMAIL ADDRESS', {
 //     exact: true
 // });
@@ -338,6 +371,9 @@ async clickInsightButton() {
   log.info('Clicked Insight button on Lead record page');
 
 }
+async clickChooseFileButton(){
+    await this.chooseFileButton.click();
+}
 async verifyCancelPopup() {
  await expect(this.page.getByRole('dialog')).toBeVisible();
   log.info(`Verified cancel confirmation popup is displayed`);
@@ -404,5 +440,234 @@ async verifyActionsDropdownOptions(options) {
       this.page.getByText(option, { exact: true })
     ).toBeVisible();
   }
+}
+/*async selectVcardFile(fileName) {
+  const pageObjectDirectory = path.dirname(fileURLToPath(import.meta.url));
+  const filePath = path.resolve(pageObjectDirectory, '..', 'Testdata', fileName);
+
+  await this.selectedFileName.setInputFiles(filePath);
+}*/
+async getVcardFrame() {
+  const iframes = this.page.locator('iframe');
+  let matchingIndex = -1;
+
+  await expect.poll(async () => {
+    const count = await iframes.count();
+
+    for (let i = 0; i < count; i++) {
+      const candidate = iframes.nth(i).contentFrame();
+
+      try {
+        if (await candidate.getByRole('heading', {
+          name: 'Import vCard',
+          exact: true
+        }).count()) {
+          matchingIndex = i;
+          return true;
+        }
+      } catch (error) {
+        if (!String(error).includes('detached')) {
+          throw error;
+        }
+      }
+    }
+
+    return false;
+  }, { timeout: 15000 }).toBe(true);
+
+  return iframes.nth(matchingIndex).contentFrame();
+}
+
+async selectVcardFile(fileName) {
+  const pageObjectDirectory = path.dirname(fileURLToPath(import.meta.url));
+  const filePath = path.resolve(pageObjectDirectory, '..', 'Testdata', fileName);
+  const frame = await this.getVcardFrame();
+  const fileInput = frame.locator('input[type="file"]');
+
+  await expect(fileInput).toHaveCount(1);
+  await fileInput.setInputFiles(filePath);
+}
+
+async verifySelectedFile(fileName) {
+  const escapedFileName = fileName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  await expect(this.selectedFileName).toHaveCount(1);
+  await expect(this.selectedFileName).toHaveValue(
+    new RegExp(`${escapedFileName}$`, 'i')
+  );
+
+  log.info(`Verified selected file: ${fileName}`);
+}
+async verifyValidationMessage(expectedMessage) {
+  await expect(
+    this.vcardFrame.getByText(expectedMessage, { exact: false })
+  ).toBeVisible({ timeout: 15000 });
+
+  log.info(`Verified vCard validation message: ${expectedMessage}`);
+}
+async clickImportButton() {
+  const frame = await this.getVcardFrame();
+  await frame.getByRole('button', {
+    name: 'Import vCard',
+    exact: true
+  }).click();
+}
+// async clickImportButton() {
+//     await this.importButton.click();
+//   }
+
+ async verifyImportedDetails() {
+  await expect(this.page).toHaveURL(/#\/leads\/record\//, {
+    timeout: 15000
+  });
+
+  const visibleLeadName = this.page
+    .getByText('Test Data', { exact: true })
+    .filter({ visible: true });
+
+  await expect(visibleLeadName.first()).toBeVisible({ timeout: 15000 });
+
+  log.info('Verified imported vCard lead');
+}
+
+async viewLeadFeatures() {
+  await expect(this.page).toHaveURL(/#\/leads\/index/);
+  await expect(
+    this.page.getByRole('columnheader', { name: 'Name', exact: true })
+  ).toBeVisible();
+
+  log.info('View Leads list is displayed');
+}
+async verifyViewFeatureDisplayed(feature) {
+  if (feature.trim().toLowerCase() === 'filter') {
+    await expect(
+      this.page.getByRole('button', { name: 'Filter', exact: true })
+    ).toBeVisible();
+    return;
+  }
+
+  await expect(
+    this.page.getByRole('columnheader', {
+      name: new RegExp(`^${feature.trim()}$`, 'i')
+    })
+  ).toBeVisible();
+}
+async clickBulkActionDropdown() {
+  const firstLeadRow = this.page
+    .getByRole('row')
+    .filter({ has: this.page.getByRole('link') })
+    .first();
+
+  await expect(firstLeadRow).toBeVisible({ timeout: 15000 });
+  await firstLeadRow.locator('td').first().click();
+
+  await expect(this.headerBulkActionButton).toBeEnabled();
+  await this.headerBulkActionButton.click();
+}
+async verifyBulkActionOptions(options) {
+  for (const option of options) {
+    await expect(
+      this.page.getByText(option, { exact: true }).filter({ visible: true })
+    ).toBeVisible();
+  }
+}
+async selectCurrentPageLeads() {
+  await this.selectRecordsMenuButton.click();
+
+  await this.page
+    .locator('scrm-table-header a')
+    .filter({ hasText: 'Select This Page' })
+    .click();
+}
+
+async verifyCurrentPageLeadsSelected() {
+  const leadRows = this.page
+    .locator('table tbody tr')
+    .filter({
+      has: this.page.locator('a[href*="/leads/record/"]')
+    });
+
+  await expect(leadRows).toHaveCount(20, { timeout: 15000 });
+
+  for (let i = 0; i < 20; i++) {
+    await expect(
+      leadRows.nth(i).locator('input[type="checkbox"]')
+    ).toBeChecked();
+  }
+}
+async openLeadFilters() {
+  await this.filterButton.click();
+}
+
+async verifyLeadFiltersDisplayed() {
+  await expect(this.lastNameFilter).toBeVisible();
+}
+async enterLastNameFilter(lastName = testData.validLead.lastName) {
+  await this.lastNameFilter.fill(lastName);
+}
+
+async verifyLastNameFilterValue(lastName = testData.validLead.lastName) {
+  await expect(this.lastNameFilter).toHaveValue(lastName);
+}
+
+async searchLeadsByLastName() {
+  // The filter form has its own Search button in addition to the navigation Search.
+  await this.page.getByRole('button', { name: 'Search', exact: true }).last().click();
+}
+
+async verifyLeadsMatchLastName(lastName = testData.validLead.lastName) {
+  const escapedLastName = lastName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const leadLinks = this.page.locator('table tbody a[href*="/leads/record/"]');
+
+  await expect(leadLinks.first()).toBeVisible({ timeout: 15000 });
+  const count = await leadLinks.count();
+  expect(count).toBeGreaterThan(0);
+
+  for (let i = 0; i < count; i++) {
+    await expect(leadLinks.nth(i)).toHaveText(
+      new RegExp(`\\b${escapedLastName}\\s*$`, 'i')
+    );
+  }
+}
+async selectImportFile(fileName) {
+  const filePath = path.resolve(
+    path.dirname(fileURLToPath(import.meta.url)),
+    '..',
+    'Testdata',
+    fileName
+  );
+
+  const importFrame = this.page.frameLocator('iframe');
+  const fileInput = importFrame.locator('input[type="file"]');
+
+  await expect(fileInput).toHaveCount(1);
+  await fileInput.setInputFiles(filePath);
+}
+
+async verifyImportFileSelected(fileName) {
+  const fileInput = this.page
+    .frameLocator('iframe')
+    .locator('input[type="file"]');
+
+  await expect(fileInput).toHaveValue(new RegExp(`${fileName.replace('.', '\\.')}$`, 'i'));
+}
+
+async clickNextWithoutImportFile() {
+  const nextButton = this.page
+  .frameLocator('iframe')
+  .getByRole('button', { name: 'Next >', exact: true });
+
+  await expect(nextButton).toBeVisible();
+  await nextButton.click();
+}
+async verifyImportFileValidationMessage() {
+  const frame = this.page.frameLocator('iframe');
+  const fileInput = frame.locator('input[type="file"]');
+
+  await expect(fileInput).toHaveValue('');
+  await expect(frame.getByRole('heading', {
+    name: 'Step 1: Upload Import File',
+    exact: true
+  })).toBeVisible();
 }
 }

@@ -1,0 +1,7 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Data;Test;;;
+FN:Test Data
+EMAIL;TYPE=INTERNET:test.qa.support@example.tv
+TEL:+1161964698
+END:VCARD
