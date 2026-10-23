@@ -4,21 +4,16 @@ import { test } from '../Fixtures/fixture.js';
 import { expect } from '@playwright/test';
 import log from '../Utils/logger.js';
 
-const { BeforeAll, Before, After } = createBdd(test);
+const { Before, After } = createBdd(test);
 
-BeforeAll(async () => {
-  log.info('========== One-time setup started ==========');
+// BeforeAll(async () => {
+//   log.info('========== One-time setup started ==========');
+//   expect(process.env.SCRM_URL).toBeTruthy();
+//   expect(process.env.SCRM_USERNAME).toBeTruthy();
+//   expect(process.env.SCRM_PASSWORD).toBeTruthy();
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Integration
-  expect(process.env.SCRM_URL).toBeTruthy();
-  expect(process.env.SCRM_USERNAME).toBeTruthy();
-  expect(process.env.SCRM_PASSWORD).toBeTruthy();
-
-  log.info('Environment variables verified');
-});
+//   log.info('Environment variables verified');
+// });
 
 Before(async ({ page }) => {
   log.info('Opening SuiteCRM for this test');

@@ -5,8 +5,8 @@ import { defineBddConfig } from 'playwright-bdd';
 
 const testDir = defineBddConfig({
   features: 'Features/**/*.feature',
-  steps: ['Steps/**/*.js', 'Hooks/**/*.js'],
-  //tags: '@login'
+  steps: ['Fixtures/fixture.js','Steps/**/*.js', 'Hooks/**/*.js'],
+  //tags: '@test or @leadsnavigation'
 });
 
 /**
