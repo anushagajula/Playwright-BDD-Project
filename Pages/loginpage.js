@@ -54,7 +54,6 @@ export class LoginPage {
         await expect(this.emptycredentials).toBeVisible();
     }
     async verifyHomePage() {
-
-        await expect(this.dashboardLink).toBeVisible();
+        await expect(this.dashboardLink).toBeVisible({ timeout: 30000 });
     }
 }

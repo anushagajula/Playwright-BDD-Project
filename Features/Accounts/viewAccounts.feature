@@ -1,4 +1,4 @@
-@Accounts
+@ViewAccounts
 Feature: View Accounts
 
   @Functional @Positive
