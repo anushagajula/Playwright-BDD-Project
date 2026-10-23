@@ -37,17 +37,39 @@ export class AccountsPage {
         this.emailfill = page.locator('scrm-composite-field').getByRole('textbox');
 
         this.errormessageInvalidEmail = page.getByText('Invalid email format.');
+        //view accounts page locators
+        this.Accountspagetoview = page.getByText('ACCOUNTS', { exact: true });
+        this.Filterbutton = page.getByRole('button', { name: 'Filter' });
+        this.Namefield = page.getByText('Name').first();
 
+        this.NameTextbox = page.getByRole('textbox').nth(1);
 
+        this.Searchbutton = page.locator('scrm-list-filter').getByRole('button', { name: 'Search' });
+        this.Insightsbutton = page.getByRole('button', { name: 'Insights' });
+        this.QuickChartspanel = page.getByText('Quick Charts');
+        this.Namecolumnheader = page.getByRole('columnheader', { name: 'Name' });
 
-
-
-
-
+        this.accountRow = (accountName) =>
+            this.page.getByRole('row').filter({ hasText: accountName });
 
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     async mouseHoverOnAccountsModule() {
         await this.accountsLink.hover();
     }
@@ -65,10 +87,7 @@ export class AccountsPage {
     async verifyCreateAccountPage() {
         await expect(this.Createaccountpage).toBeVisible();
     }
-    async clickViewAccounts() {
-        await this.mouseHoverOnAccountsModule();
-        await this.viewAccountsLink.click();
-    }
+
 
     async fillAccountDetails(name, website, officePhone) {
         await this.name.fill(name);
@@ -102,5 +121,43 @@ export class AccountsPage {
     async verifyErrorMessageInvalidEmail(errorMessage) {
 
         await expect(this.errormessageInvalidEmail).toBeVisible();
+
+
     }
+
+    async clickViewAccounts() {
+        await this.mouseHoverOnAccountsModule();
+        await this.viewAccountsLink.click();
+    }
+    async verifyViewAccountsPage() {
+        await expect(this.Accountspagetoview).toBeVisible();
+    }
+    async clickFilterButton(searchAccountName) {
+        await this.Filterbutton.click();
+        await expect(this.Namefield).toBeVisible();
+        await expect(this.NameTextbox).toBeVisible();
+        await this.NameTextbox.fill(searchAccountName);
+        await this.Searchbutton.click();
+
+
+    }
+    async verifyAccountInSearchResults(accountName) {
+        await expect(this.accountRow(accountName)).toBeVisible();
+        await expect(this.Namecolumnheader).toBeVisible();
+        await expect(this.Namefield).toBeVisible();
+
+
+
+
+    }
+    async clickInsightsButton() {
+        await expect(this.Insightsbutton).toBeVisible();
+        await this.Insightsbutton.click();
+
+    }
+    async verifyInsightsPanel(panelName) {
+        await expect(this.QuickChartspanel).toBeVisible();
+        await expect(this.page.getByText(panelName)).toBeVisible();
+    }
+
 }
