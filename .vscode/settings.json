@@ -1,11 +1,22 @@
+
 {
   "cucumberautocomplete.steps": [
+    "Steps/**/*.steps.js",
     "Steps/**/*.js",
     "Hooks/**/*.js"
+  ],
+  "cucumberautocomplete.syncfeatures": "Features/**/*.feature",
+  "cucumberautocomplete.strictGherkinCompletion": true,
+  "cucumberautocomplete.strictGherkinValidation": true,
+  "cucumberautocomplete.gherkinDefinitionPart": "(Given|When|Then)\\(",
+  "cucumberautocomplete.stepRegExSymbol": "'",
+  "cucumberautocomplete.pureTextSteps": true,
+
+  "cucumber.features": [
+    "Features/**/*.feature"
   ],
   "cucumber.glue": [
     "Steps/**/*.js",
     "Hooks/**/*.js"
-  ],
-  "cucumberautocomplete.syncfeatures": "Features/**/*.feature"
+  ]
 }
