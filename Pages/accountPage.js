@@ -51,8 +51,20 @@ export class AccountsPage {
 
         this.accountRow = (accountName) =>
             this.page.getByRole('row').filter({ hasText: accountName });
+        this.importWizardFrame = page.locator('iframe').contentFrame();
+        this.importStep1Heading = this.importWizardFrame.getByRole('heading', {
+            name: 'Step 1: Upload Import File',
+        });
+        this.importFileInput = this.importWizardFrame.locator('input[type="file"]');
+        this.importCreateNewRecordsOnly = this.importWizardFrame.locator('#import_create');
+        this.importNextButton = this.importWizardFrame.getByRole('button', {
+            name: 'Next >',
+            exact: true,
+        });
 
-
+        this.importPropertiesHeading = this.importWizardFrame.getByRole('heading', {
+            name: /Confirm Import File Properties/,
+        });
 
     }
 
@@ -158,6 +170,26 @@ export class AccountsPage {
     async verifyInsightsPanel(panelName) {
         await expect(this.QuickChartspanel).toBeVisible();
         await expect(this.page.getByText(panelName)).toBeVisible();
+    }
+
+    async navigateToImportAccounts() {
+        await this.mouseHoverOnAccountsModule();
+        await this.importAccountsLink.click();
+    }
+
+    async verifyImportAccountsPage() {
+        await expect(this.importStep1Heading).toBeVisible();
+    }
+
+    async uploadAccountsFileAndContinue(filePath) {
+        await expect(this.importStep1Heading).toBeVisible();
+        await this.importFileInput.setInputFiles(filePath);
+        await this.importCreateNewRecordsOnly.check();
+        await this.importNextButton.click();
+    }
+
+    async verifyImportPropertiesPage() {
+        await expect(this.importPropertiesHeading).toBeVisible();
     }
 
 }
