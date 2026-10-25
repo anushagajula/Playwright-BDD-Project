@@ -1,51 +1,42 @@
 import { createBdd } from 'playwright-bdd';
+import { test } from '../Fixtures/fixture.js';
+import { expect } from '@playwright/test';
+import testData from '../Testdata/accountsTestData.json' with { type: 'json' };
+import loginTestData from '../Testdata/loginTestData.json' with { type: 'json' };
 
-const { Given, When, Then } = createBdd();
+const { Given, When, Then } = createBdd(test);
 
-Given('User should be on the Home page after successful login', async ({ page }) => {
+
+
+When('User clicks the View Accounts quick action', async ({ accountsPage }) => {
+    await accountsPage.clickViewAccounts();
+});
+
+Then(/^User should be able to view all (.+)$/, async ({ accountsPage }, accountDetails) => {
+    await accountsPage.verifyViewAccountsPage();
 
 });
 
-When('User clicks the View Accounts quick action', async ({ page }) => {
+Given('the user is on the View Account page', async ({ loginPage, accountsPage }) => {
+    const credentials = loginTestData.ValidUser;
+    await loginPage.login(credentials.username, credentials.password);
+    await loginPage.verifyHomePage();
+    await accountsPage.clickViewAccounts();
+    await accountsPage.verifyViewAccountsPage();
 
 });
 
-Then(/^User should be able to view all (.+)$/, async ({ page }, accountDetails) => {
+When(
+    'the user clicks the Filter button, enters the account name in the Name field on the Filter page, and clicks the Search button',
+    async ({ accountsPage }) => {
+        await accountsPage.clickFilterButton(testData.VIEW_ACCOUNT_NAME);
+        //await accountsPage.Namefield.fill(testData.VIEW_ACCOUNT_NAME);
+    }
+);
 
-});
-
-Then('User should see {int} accounts in the current list view', async ({ page }, displayedCount) => {
-
-});
-
-Then('User should see a total account count of {int}', async ({ page }, totalCount) => {
-
-});
-
-When('User clicks the View Accounts quick action, enters {string}, and clicks the Search button', async ({ page }, accountName) => {
-
-});
-
-Then('User should be on the View Accounts page and be able to view the account {string}', async ({ page }, accountName) => {
-
-});
-
-When('User clicks the View Accounts quick action and clicks the Next Page arrow button', async ({ page }) => {
-
-});
-
-Then('User should see accounts {int}-{int} out of a total of {int} accounts', async ({ page }, firstRecord, lastRecord, totalCount) => {
-
-});
-
-Then(/^User should be able to see the (.+) button$/, async ({ page }, buttonName) => {
-
-});
-
-When('User clicks the View Accounts quick action and clicks the Insights button', async ({ page }) => {
-
-});
-
-Then(/^User should be on the View Accounts page and be able to see the (.+) panel$/, async ({ page }, panelName) => {
-
-});
+Then(
+    'the user should be able to see the account with the specified account name in the search results',
+    async ({ accountsPage }) => {
+        await accountsPage.verifyAccountInSearchResults(testData.VIEW_ACCOUNT_NAME);
+    }
+);
