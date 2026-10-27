@@ -572,13 +572,6 @@ export class LeadPage {
   await expect(selectThisPage).toBeVisible({ timeout: 10000 });
   await selectThisPage.click();
 
-  // Diagnose whether the selection action worked
-  const checkedCount = await this.page
-    .locator('input[type="checkbox"]:checked')
-    .count();
-
-  console.log('Checked checkboxes after Select This Page:', checkedCount);
-
   // Verify that selection enabled bulk actions
   await expect(this.headerBulkActionButton).toBeEnabled({
     timeout: 10000
