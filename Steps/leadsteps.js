@@ -5,8 +5,8 @@ import testData from '../Testdata/testdata.json' with { type: 'json' };
 
 const { Given, When, Then } = createBdd(test);
 
-Given('user is on Home page', async ({ leadPage }) => {
-  await leadPage.login();
+Given('user is on Home page', async ({ loginPage }) => {
+  await loginPage.verifyHomePage();
 });
 
 When('User mouse hover on Leads', async ({ leadPage }) => {
@@ -27,7 +27,6 @@ Then('user should be redirected to the {string} page', async ({ leadPage }, page
 });
 
 Given('user is on Create Lead page', async ({ leadPage }) => {
- await leadPage.login();
     await leadPage.clickLeadsOption('Create Lead');
 });
 
@@ -78,7 +77,6 @@ When('user clicks Ok button in the popup', async ({ leadPage }) => {
 
 
 Given('user is on new Lead record page', async ({leadPage}) => {
-  await leadPage.login();
 await leadPage.clickLeadsOption('Create Lead');
 await leadPage.fillValidLeadData();
 await leadPage.clicksaveButton();
@@ -133,7 +131,6 @@ Then('User able to see change log of the new lead record', async ({leadPage}) =>
 });
 
 Given('User is on  create Lead from Vcard page', async ({leadPage}) => {
-  await leadPage.login();
   await leadPage.clickLeadsOption('Create Lead From vCard');
 });
 
@@ -147,7 +144,6 @@ Then('User should see selected file on page', async ({leadPage}) => {
 });
 
 Given('User is on  create Lead from Vcard page with selcted file', async ({leadPage}) => {
-  await leadPage.login();
   await leadPage.clickLeadsOption('Create Lead From vCard');
   await leadPage.selectVcardFile('lead.vcf');
     await leadPage.verifySelectedFile('lead.vcf');
@@ -162,7 +158,6 @@ Then('User should see imported file details on page', async ({leadPage}) => {
 });
 
 Given('user is on Create Lead from vCard page', async ({leadPage}) => {
-   await leadPage.login();
   await leadPage.clickLeadsOption('Create Lead From vCard');
 });
 
@@ -176,7 +171,6 @@ Then('user should see {string}', async ({ leadPage }, message) => {
 });
 
 Given('user is on View Leads page', async ({leadPage}) => {
-  await leadPage.login();
   await leadPage.clickLeadsOption('View Leads');
 });
 
@@ -222,7 +216,6 @@ Then('User should see filter options to filter leads records', async ({leadPage}
 });
 
 Given('user is on the View Leads page with filter options', async ({ leadPage }) => {
-  await leadPage.login();
   await leadPage.clickLeadsOption('View Leads');
   await leadPage.openLeadFilters();
 });
@@ -236,8 +229,6 @@ Then('the last name should be displayed in the filter field', async ({ leadPage 
 });
 
 Given('user is on View Leads page with specified lastname on filter options', async ({ leadPage }) => {
-  await leadPage.login();
-
     await leadPage.clickLeadsOption('Create Lead');
 await leadPage.createLeadWithValidData();
 await leadPage.verifyNewCreatedLeadRecordisDisplayed();
@@ -256,12 +247,11 @@ Then('User should see leads records matching the specified last name', async ({ 
   await leadPage.verifyLeadsMatchLastName();
 });
 Given('user is on the Import Leads page', async ({ leadPage }) => {
-  await leadPage.login();
   await leadPage.clickLeadsOption('Import Leads');
 });
 
 When('user selects a valid import file from TestData', async ({ leadPage }) => {
-  await leadPage.selectImportFile('leads.csv');
+  await leadPage.selectImportFile();
 });
 
 Then('the selected file name should be displayed', async ({ leadPage }) => {

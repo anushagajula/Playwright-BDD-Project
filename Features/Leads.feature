@@ -1,7 +1,7 @@
-@lead
+@lead @authenticated
 Feature: Leads
 
-@test
+@leadsdropdown
   Scenario: Verify user can see Leads drop down with options
     Given user is on Home page
     When User mouse hover on Leads 
@@ -183,7 +183,6 @@ Scenario: Verify validation when user proceeds without selecting a file
     
     
     
-
 
 
 
