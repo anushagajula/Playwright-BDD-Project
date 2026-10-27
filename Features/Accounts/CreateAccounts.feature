@@ -1,39 +1,23 @@
-@Accounts
+@CreateAccounts
 Feature: Accounts and Create Account
 
   @Functional @Positive
-  Scenario Outline: Verify login and Accounts quick actions
-    Given User should be in SuiteCRM URL page
-    When User logs in using valid credentials and opens the Accounts module
-    Then User should see the "<Page>" and the "<QuickAction>" quick action
-
-    Examples:
-      | Page      | QuickAction     |
-      | Home page | Create Account  |
-      | Home page | View Accounts   |
-      | Home page | Import Accounts |
-
+  Scenario: Verify Accounts dropdown is displayed with all quick actions
+    Given User logs in with valid credentials
+    When User places the mouse on the Accounts module in the navigation bar
+    Then User should see all quick actions under the Accounts module
   @Functional @Positive
   Scenario: Navigate to the Create Account page
-    Given User should be on the home page
+    Given User logs in with valid credentials
     When User clicks the Create Account quick action under the Accounts module
     Then The Create Account page should be displayed
 
-  
-  @Functional @Positive
-  Scenario Outline: Create an account using NAME, WEBSITE, and OFFICE PHONE
-    Given User should be on the Create Account page
-    When User enters the account details:
-      | Field        | TestData             |
-      | NAME         | <NameTestData>       |
-      | WEBSITE      | <WebsiteTestData>    |
-      | OFFICE PHONE | <OfficePhoneTestData> |
-    When User clicks the Save button
-    Then The account should be created with the entered NAME, WEBSITE, and OFFICE PHONE
 
-    Examples:
-      | NameTestData | WebsiteTestData | OfficePhoneTestData |
-      | AccountName  | AccountWebsite  | AccountOfficePhone  |
+  @Functional @Positive
+  Scenario: Create an account using NAME, WEBSITE, and OFFICE PHONE from JSON
+    Given User should be on the Create Account page
+    When User enters account details from JSON and clicks the Save button
+    Then The account should be created with the entered NAME, WEBSITE, and OFFICE PHONE
 
   @Functional @Negative
   Scenario Outline: Verify NAME is mandatory
@@ -46,17 +30,12 @@ Feature: Accounts and Create Account
       | Missing required field: Name |
 
   @Functional @Positive
-  Scenario Outline: Verify the Email field accepts a valid address
+  Scenario Outline: Verify the Email field with invalid format 
     Given User should be on the Create Account page
     When User enters the email from "<TestData>"
-    Then The Email field should accept the address
+    Then The Email field should throw error message if the email format is invalid.
+
 
     Examples:
       | TestData  |
-      | ValidEmail |
-                        
-
-  
-
-         
-  
+      |InValidEmail |

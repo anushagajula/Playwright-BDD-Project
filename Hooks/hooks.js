@@ -21,5 +21,5 @@ Before({ tags: '@authenticated' }, async ({ loginPage }) => {
 });
 
 After(async () => {
-  log.info('Test finished');
+    log.info('Test finished');
 });
