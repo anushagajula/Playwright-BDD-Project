@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import log from '../Utils/logger.js';
 import testData from '../Testdata/testdata.json' with { type: 'json' };
 import { fileURLToPath } from 'node:url';
-
+//import path from 'node:path';
 export class LeadPage {
   constructor(page) {
     this.page = page;
@@ -464,7 +464,7 @@ export class LeadPage {
 
     return iframes.nth(matchingIndex).contentFrame();
   }
-  async selectVcardFile(fileName) {
+ /* async selectVcardFile(fileName) {
     const filePath = fileURLToPath(
       new URL(`../Testdata/${fileName}`, import.meta.url)
     );
@@ -473,8 +473,20 @@ export class LeadPage {
 
     await expect(fileInput).toHaveCount(1);
     await fileInput.setInputFiles(filePath);
-  }
- 
+  }*/
+ /*async selectVcardFile(fileName) {
+  const filePath = path.resolve(
+    process.cwd(),
+    'Testdata',
+    fileName
+  );
+
+  const frame = await this.getVcardFrame();
+  const fileInput = frame.locator('input[type="file"]');
+
+  await expect(fileInput).toHaveCount(1);
+  await fileInput.setInputFiles(filePath);
+}*/
 
   async verifySelectedFile(fileName) {
     const escapedFileName = fileName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -626,6 +638,20 @@ async verifyCurrentPageLeadsSelected() {
   await expect(fileInput).toHaveCount(1);
   await fileInput.setInputFiles(filePath);
 }
+/*async selectImportFile() {
+  const filePath = path.resolve(
+    process.cwd(),
+    'Testdata',
+    'leads.csv'
+  );
+
+  const fileInput = this.page
+    .frameLocator('iframe')
+    .locator('input[type="file"]');
+
+  await expect(fileInput).toHaveCount(1);
+  await fileInput.setInputFiles(filePath);
+}*/
 
   async verifyImportFileSelected(fileName) {
     const fileInput = this.page

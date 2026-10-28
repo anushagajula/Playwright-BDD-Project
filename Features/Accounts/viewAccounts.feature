@@ -20,11 +20,3 @@ Feature: View Accounts
     Given the user is on the View Account page
     When the user clicks the Filter button, enters the account name in the Name field on the Filter page, and clicks the Search button
     Then the user should be able to see the account with the specified account name in the search results
-
-<<<<<<< HEAD
-  
-
-
-=======
-  
->>>>>>> 8704396 (added accounts,login page)

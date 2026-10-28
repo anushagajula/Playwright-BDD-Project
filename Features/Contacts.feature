@@ -126,7 +126,7 @@ Background: User is logged into SuiteCRM Application and is on Home page
 
   Scenario Outline: Verify User able to see Bulk Action drop down
     Given User is on the View Contacts screen
-    When User clicks on Bulk Action drop down
+    When User clicks on Contacts Bulk Action drop down
     Then User able to see the following options in the Bulk Action drop down
       | Bulk Action drop down|
       |Add to Target List    |
@@ -215,7 +215,6 @@ Background: User is logged into SuiteCRM Application and is on Home page
 
 
   
-
 
 
 

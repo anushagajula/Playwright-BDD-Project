@@ -221,7 +221,7 @@ Then('User should be able to see the selected Contact from list of contacts', as
   // From: Features\Contacts.feature:125:5
 });
 
-When('User clicks on Bulk Action drop down', async ({}) => {
+When('User clicks on Contacts Bulk Action drop down', async ({}) => {
   // Step: When User clicks on Bulk Action drop down
   // From: Features\Contacts.feature:129:5
 });
@@ -395,4 +395,3 @@ Then('The system should display an error message {string} in Red color', async (
   // Step: Then The system should display an error message "No file choosen" in Red color
   // From: Features\Contacts.feature:210:5
 });
-
