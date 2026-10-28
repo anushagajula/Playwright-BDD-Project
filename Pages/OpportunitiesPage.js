@@ -1,5 +1,5 @@
 
-export class OpportunitiesPage {
+export class OpportunitiesPage{
   constructor(page) {
     this.page = page;
   }

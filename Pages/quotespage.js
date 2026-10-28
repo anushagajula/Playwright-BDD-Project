@@ -103,9 +103,12 @@ this.validUntil = this.quoteFrame
     this.headerBulkActionButton = this.page
       .locator('scrm-table-header')
       .getByRole('button', { name: 'Bulk Action', exact: true });
-    this.recentlyViewed = this.page.getByText('Recently Viewed', {
-      exact: true
-    });
+      this.recentlyViewed = this.quotesMenu
+  .locator('xpath=ancestor::li[1]')
+  .getByText('Recently Viewed', { exact: true });
+    // this.recentlyViewed = this.page.getByText('Recently Viewed', {
+    //   exact: true
+    // });
   }
   //===========================================Methods======================================
   async login() {
@@ -456,14 +459,17 @@ async searchQuotesByTitle() {
 }
 
 async verifyQuotesMatchTitle() {
-  const titleLinks = this.page.locator('table tbody a[href*="/quotes/record/"]');
-  await expect(titleLinks.first()).toBeVisible({ timeout: 15000 });
-  const count = await titleLinks.count();
-  expect(count).toBeGreaterThan(0);
-  for (let index = 0; index < count; index++) {
-    await expect(titleLinks.nth(index)).toHaveText(testData.validQuote.title);
+ const titleLinks = this.page.locator(
+  'table tbody a[href*="/quotes/record/"]'
+);
+
+await expect.poll(async () => {
+  const titles = await titleLinks.allTextContents();
+  return titles.length > 0 &&
+    titles.every(title => title.trim() === testData.validQuote.title);
+}).toBe(true);
   }
-}
+
 
 async openQuoteImportPage() {
   await this.clickQuotesOption('Import');

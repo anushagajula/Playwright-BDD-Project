@@ -9,6 +9,10 @@
     "Import": "https://suite8demo.suiteondemand.com/#/import/step1?import_module=AOS_Quotes&return_module=AOS_Quotes&return_action=index",
     "Import Line Items": "https://suite8demo.suiteondemand.com/#/import/step1?import_module=AOS_Products_Quotes&return_module=AOS_Quotes&return_action=index"
   },
+  "ValidUser": {
+    "username": "will",
+    "password": "will"
+  },
   "InvalidUser": {
     "username": "invalid-user",
     "password": "incorrect-password"

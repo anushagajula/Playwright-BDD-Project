@@ -1,7 +1,6 @@
 import { expect } from '@playwright/test';
 import log from '../Utils/logger.js';
 import testData from '../Testdata/testdata.json' with { type: 'json' };
-import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export class LeadPage {
@@ -475,6 +474,7 @@ export class LeadPage {
     await expect(fileInput).toHaveCount(1);
     await fileInput.setInputFiles(filePath);
   }
+ 
 
   async verifySelectedFile(fileName) {
     const escapedFileName = fileName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -556,27 +556,30 @@ export class LeadPage {
       ).toBeVisible();
     }
   }
- async selectCurrentPageLeads() {
-  // Wait for the Leads table to be ready
-  await expect(
-    this.page.getByRole('columnheader', { name: 'Name', exact: true })
-  ).toBeVisible({ timeout: 15000 });
+  async selectCurrentPageLeads() {
+    await expect(
+      this.page.getByRole('columnheader', { name: 'Name', exact: true })
+    ).toBeVisible({ timeout: 15000 });
 
-  // Open selection menu
-  await this.selectRecordsMenuButton.click();
+    const firstLeadRow = this.page
+      .getByRole('row')
+      .filter({ has: this.page.getByRole('link') })
+      .first();
 
-  const selectThisPage = this.page
-    .locator('scrm-table-header a')
-    .filter({ hasText: 'Select This Page' });
+    await expect(firstLeadRow).toBeVisible({ timeout: 15000 });
+    await this.selectRecordsMenuButton.click();
 
-  await expect(selectThisPage).toBeVisible({ timeout: 10000 });
-  await selectThisPage.click();
+    const selectThisPage = this.page
+      .locator('scrm-table-header a')
+      .filter({ hasText: 'Select This Page' });
 
-  // Verify that selection enabled bulk actions
-  await expect(this.headerBulkActionButton).toBeEnabled({
-    timeout: 10000
-  });
-}
+    await expect(selectThisPage).toBeVisible({ timeout: 10000 });
+    await selectThisPage.click();
+
+    await expect(this.headerBulkActionButton).toBeEnabled({
+      timeout: 10000
+    });
+  }
 
 async verifyCurrentPageLeadsSelected() {
   await expect(this.headerBulkActionButton).toBeEnabled({
@@ -605,16 +608,12 @@ async verifyCurrentPageLeadsSelected() {
   async verifyLeadsMatchLastName(lastName = testData.validLead.lastName) {
     const escapedLastName = lastName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const leadLinks = this.page.locator('table tbody a[href*="/leads/record/"]');
+    const expectedLastName = new RegExp(`\\b${escapedLastName}\\s*$`, 'i');
 
-    await expect(leadLinks.first()).toBeVisible({ timeout: 15000 });
-    const count = await leadLinks.count();
-    expect(count).toBeGreaterThan(0);
-
-    for (let i = 0; i < count; i++) {
-      await expect(leadLinks.nth(i)).toHaveText(
-        new RegExp(`\\b${escapedLastName}\\s*$`, 'i')
-      );
-    }
+    await expect.poll(async () => {
+      const names = await leadLinks.allTextContents();
+      return names.length > 0 && names.every(name => expectedLastName.test(name.trim()));
+    }, { timeout: 15000 }).toBe(true);
   }
   async selectImportFile() {
     const filePath = fileURLToPath(

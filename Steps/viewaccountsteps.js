@@ -2,7 +2,7 @@ import { createBdd } from 'playwright-bdd';
 import { test } from '../Fixtures/fixture.js';
 import { expect } from '@playwright/test';
 import testData from '../Testdata/accountsTestData.json' with { type: 'json' };
-import loginTestData from '../Testdata/loginTestData.json' with { type: 'json' };
+import testdata from '../Testdata/testdata.json' with { type: 'json' };
 
 const { Given, When, Then } = createBdd(test);
 
@@ -18,12 +18,11 @@ Then(/^User should be able to view all (.+)$/, async ({ accountsPage }, accountD
 });
 
 Given('the user is on the View Account page', async ({ loginPage, accountsPage }) => {
-    const credentials = loginTestData.ValidUser;
-    await loginPage.login(credentials.username, credentials.password);
-    await loginPage.verifyHomePage();
-    await accountsPage.clickViewAccounts();
-    await accountsPage.verifyViewAccountsPage();
-
+  await loginPage.navigateToLoginPage();
+  await loginPage.loginWithEnvironmentCredentials();
+  await loginPage.verifyHomePage();
+  await accountsPage.clickViewAccounts();
+  await accountsPage.verifyViewAccountsPage();
 });
 
 When(
