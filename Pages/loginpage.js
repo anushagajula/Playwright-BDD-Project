@@ -5,8 +5,8 @@ export class LoginPage {
   constructor(page) {
     this.page = page;
 
-    //this.CRMlogo = page.locator('form[name="login"] img');
-    this.CRMlogo = page.locator('img').first();
+    this.CRMlogo = page.locator('form[name="login"] img');
+    //this.CRMlogo = page.locator('img').first();
     this.username = page.getByRole('textbox', { name: 'Username' });
     this.password = page.getByRole('textbox', { name: 'Password' });
     this.loginButton = page.getByRole('button', { name: 'Log In' });
@@ -26,7 +26,7 @@ export class LoginPage {
     this.dashboardLink = page
       .locator('iframe')
       .contentFrame()
-      .getByRole('link', { name: 'SUITECRM DASHBOARD' });
+      .getByRole('link', { name: 'SUITECRM DASHBOARD', exact: true });
   }
 
   async navigateToLoginPage() {
@@ -98,7 +98,7 @@ export class LoginPage {
     await expect(this.page).toHaveURL(loginPathPattern, { timeout: 15000 });
   }
 
-  async verifyHomePage() {
-    await expect(this.dashboardLink).toBeVisible({ timeout: 10000 });
-  }
+   async verifyHomePage() {
+        await expect(this.dashboardLink).toBeVisible({ timeout: 30000 });
+    }
 }

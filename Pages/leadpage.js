@@ -92,12 +92,12 @@ export class LeadPage {
       .locator('scrm-table-header')
       .getByRole('button', { name: 'Bulk Action', exact: true });
 
-    /*this.selectRecordsMenuButton = this.page
+    this.selectRecordsMenuButton = this.page
   .locator('scrm-table-header')
-  .locator('button[aria-hidden="true"]');*/
-  this.selectRecordsMenuButton = this.page
+  .locator('button[aria-hidden="true"]');
+  /*this.selectRecordsMenuButton = this.page
   .locator('scrm-bulk-action-menu')
-  .getByRole('button', { name: 'Select Action Menu', exact: true });
+  .getByRole('button', { name: 'Select Action Menu', exact: true });*/
   this.filterButton = this.page.getByRole('button', {
       name: 'Filter',
       exact: true
@@ -598,6 +598,7 @@ async selectImportFile() {
   const selectThisPage = this.page
     .locator('scrm-table-header a')
     .filter({ hasText: 'Select This Page' });
+
 
   await expect(selectThisPage).toBeVisible({ timeout: 10000 });
   await selectThisPage.click();

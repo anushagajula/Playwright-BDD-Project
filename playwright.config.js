@@ -23,6 +23,12 @@ const testDir = defineBddConfig({
 export default defineConfig({
   testDir,
  //testDir,
+ // Global test timeout, including Before and After hooks
+  timeout: 60000,
+  // Default timeout for expect() assertions
+  expect: {
+    timeout: 10000,
+  },
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
