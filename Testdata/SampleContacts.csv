@@ -1,0 +1,25 @@
+"First Name","Last Name","ID","Salutation","Job Title","Department","Account Name","Email Address","Non Primary E-mails","Mobile","Office Phone","Home","Other Phone","Fax","Primary Address Street","Primary Address City","Primary Address State","Primary Address Postal Code","Primary Address Country","Alternate Address Street","Alternate Address City","Alternate Address State","Alternate Address Postal Code","Alternate Address Country","Description","Birthdate","Lead Source","Campaign ID","Do Not Call","Reports to ID","Assistant","Assistant Phone","Assigned to","Assigned User","Date Created","Date Modified","Modified By","Created By","Deleted","Photo","Lawful Basis","Lawful Basis Date Reviewed","Lawful Basis Source","Joomla Account ID","Account Disabled","Portal User Type","Longitude","Latitude","Geocode Status","Address"
+"Emil","Stockman","012425c3-72e5-4c4f-a76e-09c64c621217","","President","","Anytime Air Support Inc","kid.info.qa@example.tw","","(230) 965-8021","(074) 299-8945","(918) 663-1821","","","555 Maple Street.","Sunnyvale","CA","56972","USA","","","","","","","","Word of mouth","","0","","","","sally","seed_sally_id","2022-10-05 10:45","2026-10-29 08:00","1","1","0","","","","","","","Single user","","","",""
+"Taylor","Manthey","04bd267e-efb4-4aee-abbc-9c9582dd1bff","","VP Operations","","AB Drivers Limited","sales38@example.it","","(447) 106-5619","(462) 410-3806","(015) 159-7682","","","111 Vista Road","Denver","CA","34965","USA","","","","","","","","Other","","0","","","","sarah","seed_sarah_id","2025-09-11 12:45","2026-10-29 08:00","1","1","0","","","","","","","Single user","","","",""
+"Basil","Moriarty","06cb213b-271b-43a0-98d2-55db138e9bad","","President","","First National S/B","kid.support@example.name","","(640) 864-0714","(086) 000-7935","(798) 673-4871","","","777 West Filmore Ln","San Mateo","CA","56907","USA","","","","","","","","Word of mouth","","0","","","","sally","seed_sally_id","2023-12-15 19:15","2026-10-29 08:00","1","1","0","","","","","","","Single user","","","",""
+"Lilly","Roemer","0812eedd-c7fd-44ef-8aae-e959b24aff03","","Mgr Operations","","Grow-Fast Inc","beans.section.the@example.tw","","(660) 170-0186","(810) 677-4688","(779) 724-8253","","","999 Baker Way","Sunnyvale","CA","87527","USA","","","","","","","","Partner","","0","","","","max","seed_max_id","2022-04-11 07:15","2026-10-29 08:00","1","1","0","","","","","","","Single user","","","",""
+"Kelley","Abramson","082ba7fd-aaf0-4dd1-ab0a-405077d6ca99","","Senior Product Manager","","Air Safety Inc","im.sugar@example.org","","(368) 011-4803","(330) 544-2778","(456) 971-4706","","","48920 San Carlos Ave","Hartford","CA","72191","USA","","","","","","","","Direct Mail","","0","","","","sally","seed_sally_id","2022-04-03 17:15","2026-10-29 08:00","1","1","0","","","","","","","Single user","","","",""
+
+
+"This is a sample import file which provides an example of the expected contents of a file that is ready for import."
+"The file is a comma-delimited .csv file, using double-quotes as the field qualifier."
+
+"The header row is the top-most row in the file and contains the field labels as you would see them in the application."
+"These labels are used for mapping the data in the file to the fields in the application."
+
+"Notes: The database names could also be used in the header row. This is useful when you are using phpMyAdmin or another database tool to provide an exported list of data to import."
+"The column order is not critical as the import process matches the data to the appropriate fields based on the header row."
+
+
+"To use this file as a template, do the following:"
+"1. Remove the sample rows of data"
+"2. Remove the help text that you are reading right now"
+"3. Input your own data into the appropriate rows and columns"
+"4. Save the file to a known location on your system"
+"5. Click on the Import option from the Actions menu in the application and choose the file to upload"
+   
