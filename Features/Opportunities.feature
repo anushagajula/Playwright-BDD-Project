@@ -1,4 +1,4 @@
-@Opportunities
+@Opportunities @authenticated
 
 Feature: Opportunities
 

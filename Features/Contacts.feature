@@ -1,4 +1,4 @@
-@Contacts
+@Contacts @authenticated
 Feature: Contacts
 
 
