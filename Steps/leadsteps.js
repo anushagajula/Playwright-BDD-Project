@@ -1,288 +1,267 @@
 
 import { createBdd } from 'playwright-bdd';
 import { test } from '../Fixtures/fixture.js';
+import testData from '../Testdata/testdata.json' with { type: 'json' };
 
 const { Given, When, Then } = createBdd(test);
 
-Given('user is on Home page', async function({page}){
-  console.log('Step: Given user is on Home page');
+Given('user is on Home page', async ({ loginPage }) => {
+  await loginPage.verifyHomePage();
 });
 
-When('User mouse hover on Leads', async ({}) => {
-  // Step: When User mouse hover on Leads
-  // From: Features\Leads.feature:6:5
+When('User mouse hover on Leads', async ({ leadPage }) => {
+  await leadPage.hoverOnLeads();
 });
 
-Then('User should see the following options in the Leads dropdown is Displayed:', async ({}, dataTable) => {
-  // Step: Then User should see the following options in the Leads dropdown:
-  // From: Features\Leads.feature:7:5
+Then('User should see the following options in the Leads dropdown is Displayed:', async ({ leadPage }, dataTable) => {
+  const options = dataTable.raw().slice(1).map(([option]) => option);
+  await leadPage.verifyDropdownOptions(options);
 });
 
-When('user clicks {string}', async ({}, arg) => {
-  // Step: When user clicks "Create Lead"
-  // From: Features\Leads.feature:16:5
+When('user clicks {string}', async ({ leadPage }, name) => {
+  await leadPage.clickLeadsOption(name);
 });
 
-Then('user should be redirected to the {string} page', async ({}, arg) => {
-  // Step: Then user should be redirected to the "Create Lead" page
-  // From: Features\Leads.feature:17:5
+Then('user should be redirected to the {string} page', async ({ leadPage }, pageName) => {
+  await leadPage.redirectedpage(pageName);
 });
 
-Given('user is on Create Lead page', async ({}) => {
-  // Step: Given user is on Create Lead page
-  // From: Features\Leads.feature:27:5
+Given('user is on Create Lead page', async ({ leadPage }) => {
+    await leadPage.clickLeadsOption('Create Lead');
 });
 
-When('User views features on Create Lead page', async ({}) => {
-  // Step: When User views features
-  // From: Features\Leads.feature:28:5
+When('User views features on Create Lead page', async ({ leadPage }) => {
+  await leadPage.viewCreateLeadFeatures();
 });
 
-Then('user should see the following features in the Create Lead page is Displayed:', async ({}, dataTable) => {
-  // Step: Then user should see the following features in the Create Lead page is Displayed:
-  // From: Features\Leads.feature:29:5
+Then('user should see the following features in the Create Lead page is Displayed:', async ({ leadPage }, dataTable) => {
+  const features = dataTable.rows().map(row => row[0]);
+
+        for (const feature of features) {
+            await leadPage.verifyFeatureDisplayed(feature);
+}
 });
 
 
-When('user clicks on Save button without entering any details', async ({}) => {
-  // Step: When user clicks on Save button without entering any details
-  // From: Features\Leads.feature:40:5
+When('user clicks on Save button without entering any details', async ({ leadPage }) => {
+  await leadPage.clickSaveButton('empty');
 });
 
-Then('User able to see error message {string}', async ({ page }, message) => {
-  // Add an assertion that the expected error message is visible.
+Then('User able to see error message {string}', async ({ leadPage }, message) => {
+  await leadPage.getErrorMessage(message);
 });
 
-When('user clicks on Save button by entering {string}', async ({ page }, fieldname) => {
-  // Enter invalid data for the requested field, then click Save.
+When('user clicks on Save button by entering {string}', async ({ leadPage }, fieldname) => {
+  await leadPage.clickSaveButton(fieldname);
 });
 
-When('user clicks on Save button by entering valid data in {string} withall mandatory fields', async ({ page }, pageName) => {
-  // Enter valid values in the required fields, then click Save.
+When('user clicks on Save button by entering valid data withall mandatory fields', async ({ leadPage }) => {
+  await leadPage.createLeadWithValidData();
 });
 
-Then('user should be redirected to the new Lead record page with features', async ({ page }) => {
-  // Assert that the browser is on the new Lead record page with the expected features.
+Then('user should be redirected to the new Lead record page', async ({ leadPage }) => {
+   await leadPage.verifyNewCreatedLeadRecordisDisplayed();
 });
 
-When('user clicks on Cancel button by entering valid data in {string} withall mandatory fields', async ({}, pageName) => {
-  // Step: When user clicks on Cancel button by entering valid data in all mandatory fields
-  // From: Features\Leads.feature:61:5
+When('user clicks on Cancel button by entering valid data withall mandatory fields', async ({ leadPage}) => {
+ await leadPage.clickCancelButtonWithValidData();
 });
 
-Then('User able to see popup to cancel Lead creation', async ({}) => {
-  // Step: Then User able to see popup to cancel Lead creation
-  // From: Features\Leads.feature:62:5
+Then('User able to see popup to cancel', async ({ leadPage }) => {
+  await leadPage.verifyCancelPopup();
 });
 
-Given('user is on Create Lead page with popup to cancel Lead creation', async ({}) => {
-  // Step: Given user is on Create Lead page with popup to cancel Lead creation
-  // From: Features\Leads.feature:65:5
+When('user clicks Ok button in the popup', async ({ leadPage }) => {
+  await leadPage.clickOkButtonInPopup();
 });
 
-When('user clicks on {string} button in the popup', async ({}, arg) => {
-  // Step: When user clicks on "Ok" button in the popup
-  // From: Features\Leads.feature:66:5
+
+Given('user is on new Lead record page', async ({leadPage}) => {
+await leadPage.clickLeadsOption('Create Lead');
+await leadPage.fillValidLeadData();
+await leadPage.clicksaveButton();
+  //await leadPage.openExistingLead(fullName);
 });
 
-Then('user should be redirected to the View Leads page', async ({}) => {
-  // Step: Then user should be redirected to the View Leads page
-  // From: Features\Leads.feature:67:5
+
+When('user clicks on Edit button on the page', async ({leadPage}) => {
+  await leadPage.clickEditButton();
+  
 });
 
-Given('user is on new Lead record page', async ({}) => {
-  // Step: Given user is on new Lead record page
-  // From: Features\Leads.feature:70:5
+Then('User able to update new lead record fields', async ({leadPage}) => {
+  await leadPage.updateLeadRecordFields();
 });
 
-When('user clicks on Edit button on the {string}', async ({}, pageName) => {
-  // Step: When user clicks on Edit button
-  // From: Features\Leads.feature:71:5
+When('User clicks insights button', async ({leadPage}) => {
+  await leadPage.clickInsightButton();
 });
 
-Then('User able to update new lead record fields', async ({}) => {
-  // Step: Then User able to update new lead record fields
-  // From: Features\Leads.feature:72:5
+Then('User able to see insights of the new lead record', async ({leadPage}) => {
+  await leadPage.verifyLeadInsightsDisplayed();
 });
 
-When('User clicks insights button', async ({}) => {
-  // Step: When User clicks insights button
-  // From: Features\Leads.feature:76:5
+
+When('user clicks on actions drop down', async ({leadPage}) => {
+  await leadPage.actionsDropdown.click();
 });
 
-Then('User able to see insights of the new lead record', async ({}) => {
-  // Step: Then User able to see insights of the new lead record
-  // From: Features\Leads.feature:77:5
+Then('User able to see the following options in the actions drop down:', async ({leadPage}, dataTable) => {
+  const options = dataTable.raw().slice(1).map(([option]) => option);
+    await leadPage.verifyActionsDropdownOptions(options);
+  
 });
 
-Given('user is on new lead record with actions dropdown', async ({}) => {
-  // Step: Given user is on new lead record with actions dropdown
-  // From: Features\Leads.feature:80:5
+When('user clicks on Delete option', async ({leadPage}) => {
+  await leadPage.actionsDropdown.click();
+  await leadPage.clickDeleteButton();
 });
 
-When('user clicks on actions drop down', async ({}) => {
-  // Step: When user clicks on actions drop down
-  // From: Features\Leads.feature:81:5
+Then('User able to see popup to delete Lead record', async ({leadPage}) => {
+  await leadPage.verifyDeletePopup();
 });
 
-Then('User able to see the following options in the actions drop down:', async ({}, dataTable) => {
-  // Step: Then User able to see the following options in the actions drop down:
-  // From: Features\Leads.feature:82:5
+When('user clicks on View Change Log option', async ({leadPage}) => {
+  await leadPage.actionsDropdown.click();
+  await leadPage.clickViewChangeLogButton();
 });
 
-When('user clicks on Delete option', async ({}) => {
-  // Step: When user clicks on Delete option
-  // From: Features\Leads.feature:93:5
+Then('User able to see change log of the new lead record', async ({leadPage}) => {
+  await leadPage.verifyViewChangeLogPopup();
 });
 
-Then('User able to see popup to delete Lead record', async ({}) => {
-  // Step: Then User able to see popup to delete Lead record
-  // From: Features\Leads.feature:94:5
+Given('User is on  create Lead from Vcard page', async ({leadPage}) => {
+  await leadPage.clickLeadsOption('Create Lead From vCard');
 });
 
-When('user clicks on View Change Log option', async ({}) => {
-  // Step: When user clicks on View Change Log option
-  // From: Features\Leads.feature:98:5
+When('User selects Vcard file', async ({leadPage}) => {
+  //await leadPage.clickChooseFileButton();
+  await leadPage.selectVcardFile('lead.vcf');
 });
 
-Then('User able to see change log of the new lead record', async ({}) => {
-  // Step: Then User able to see change log of the new lead record
-  // From: Features\Leads.feature:99:5
+Then('User should see selected file on page', async ({leadPage}) => {
+ await leadPage.verifySelectedFile('lead.vcf');
 });
 
-Given('User is on  create Lead from Vcard page', async ({}) => {
-  // Step: Given User is on  create Lead from Vcard page
-  // From: Features\Leads.feature:102:5
+Given('User is on  create Lead from Vcard page with selcted file', async ({leadPage}) => {
+  await leadPage.clickLeadsOption('Create Lead From vCard');
+  await leadPage.selectVcardFile('lead.vcf');
+    await leadPage.verifySelectedFile('lead.vcf');
 });
 
-When('User clicks choose file button', async ({}) => {
-  // Step: When User clicks choose file button
-  // From: Features\Leads.feature:103:5
+When('User clicks Import Vcard button', async ({leadPage}) => {
+  await leadPage.clickImportButton();
 });
 
-Then('User should see selected file on page', async ({}) => {
-  // Step: Then User should see selected file on page
-  // From: Features\Leads.feature:104:5
+Then('User should see imported file details on page', async ({leadPage}) => {
+ await leadPage.verifyImportedDetails();
 });
 
-Given('User is on  create Lead from Vcard page with selcted file', async ({}) => {
-  // Step: Given User is on  create Lead from Vcard page with selcted file
-  // From: Features\Leads.feature:107:5
+Given('user is on Create Lead from vCard page', async ({leadPage}) => {
+  await leadPage.clickLeadsOption('Create Lead From vCard');
 });
 
-When('User clicks Import Vcard button', async ({}) => {
-  // Step: When User clicks Import Vcard button
-  // From: Features\Leads.feature:108:5
+When('user selects {string} from TestData', async ({ leadPage }, fileName) => {
+  await leadPage.selectVcardFile(fileName);
+  await leadPage.clickImportButton();
 });
 
-Then('User should see imported file details on page', async ({}) => {
-  // Step: Then User should see imported file details on page
-  // From: Features\Leads.feature:109:5
+Then('user should see {string}', async ({ leadPage }, message) => {
+  await leadPage.verifyValidationMessage(message);
 });
 
-Given('user is on Create Lead from vCard page', async ({}) => {
-  // Step: Given user is on Create Lead from vCard page
-  // From: Features\Leads.feature:112:5
+Given('user is on View Leads page', async ({leadPage}) => {
+  await leadPage.clickLeadsOption('View Leads');
 });
 
-When('user selects {string} from TestData', async ({}, arg) => {
-  // Step: When user selects "oversize.vcf" from TestData
-  // From: Features\Leads.feature:113:5
+When('User views features on View Leads page', async ({ leadPage }) => {
+  await leadPage.viewLeadFeatures();
 });
 
-Then('user should see {string}', async ({}, arg) => {
-  // Step: Then user should see "The uploaded file exceeds the 30000 bytes size limit which was specified in HTML form."
-  // From: Features\Leads.feature:114:5
+Then('user should see the following features in the View Leads page:', async ({leadPage}, dataTable) => {
+  const features = dataTable.rows().map(row => row[0]);
+
+        for (const feature of features) {
+            await leadPage.verifyViewFeatureDisplayed(feature);
+}
 });
 
-Given('user is on View Leads page', async ({}) => {
-  // Step: Given user is on View Leads page
-  // From: Features\Leads.feature:122:5
+When('User clicks on Bulk Action drop down on Page', async ({leadPage}) => {
+ await leadPage.clickBulkActionDropdown();
 });
 
-Then('user should see the following features in the View Leads page:', async ({}, dataTable) => {
-  // Step: Then user should see the following features in the View Leads page:
-  // From: Features\Leads.feature:124:5
+Then('User able to see the following options in the Bulk Action drop down:', async ({leadPage}, dataTable) => {
+   const expectedOptions = dataTable.raw().slice(1).map(([option]) => option.trim());
+    await leadPage.verifyBulkActionOptions(expectedOptions);
+    
+  
 });
 
-When('User clicks on Bulk Action drop down', async ({}) => {
-  // Step: When User clicks on Bulk Action drop down
-  // From: Features\Leads.feature:138:5
+
+When('User selects This Page from the selection menu', async ({ leadPage }) => {
+  await leadPage.viewLeadFeatures();
+  await leadPage.selectCurrentPageLeads();
 });
 
-Then('User able to see the following options in the Bulk Action drop down:', async ({}, dataTable) => {
-  // Step: Then User able to see the following options in the Bulk Action drop down:
-  // From: Features\Leads.feature:139:5
+Then('User should see only current page Leads records selected', async ({ leadPage }) => {
+  await leadPage.verifyCurrentPageLeadsSelected();
 });
 
-Given('user is on View Leads page with Bulk Action drop down', async ({}) => {
-  // Step: Given user is on View Leads page with Bulk Action drop down
-  // From: Features\Leads.feature:149:5
+When('User clicks on Filter', async ({leadPage}) => {
+  await leadPage.openLeadFilters();
 });
 
-When('User clicks on Select This Page option in Bulk Action drop down', async ({}) => {
-  // Step: When User clicks on Select This Page option in Bulk Action drop down
-  // From: Features\Leads.feature:150:5
+Then('User should see filter options to filter leads records', async ({leadPage}) => {
+   await leadPage.verifyLeadFiltersDisplayed();
 });
 
-Then('User should see only current page Leads records selected', async ({}) => {
-  // Step: Then User should see only current page Leads records selected
-  // From: Features\Leads.feature:151:5
+Given('user is on the View Leads page with filter options', async ({ leadPage }) => {
+  await leadPage.clickLeadsOption('View Leads');
+  await leadPage.openLeadFilters();
 });
 
-When('User clicks on Filter', async ({}) => {
-  // Step: When User clicks on Filter
-  // From: Features\Leads.feature:155:5
+When('user enters a last name in the filter', async ({ leadPage }) => {
+  await leadPage.enterLastNameFilter();
 });
 
-Then('User should see filter options to filter leads records', async ({}) => {
-  // Step: Then User should see filter options to filter leads records
-  // From: Features\Leads.feature:156:5
+Then('the last name should be displayed in the filter field', async ({ leadPage }) => {
+  await leadPage.verifyLastNameFilterValue();
 });
 
-Given('user is on the View Leads page with filter options', async ({}) => {
-  // Step: Given user is on the View Leads page with filter options
-  // From: Features\Leads.feature:159:5
+Given('user is on View Leads page with specified lastname on filter options', async ({ leadPage }) => {
+    await leadPage.clickLeadsOption('Create Lead');
+await leadPage.createLeadWithValidData();
+await leadPage.verifyNewCreatedLeadRecordisDisplayed();
+
+await leadPage.clickLeadsOption('View Leads');
+await leadPage.openLeadFilters();
+await leadPage.enterLastNameFilter(testData.validLead.lastName);
+await leadPage.verifyLastNameFilterValue();
 });
 
-When('user enters a last name in the filter', async ({}) => {
-  // Step: When user enters a last name in the filter
-  // From: Features\Leads.feature:160:5
+When('user clicks the search button', async ({ leadPage }) => {
+  await leadPage.searchLeadsByLastName();
 });
 
-Then('the last name should be displayed in the filter field', async ({}) => {
-  // Step: Then the last name should be displayed in the filter field
-  // From: Features\Leads.feature:161:5
+Then('User should see leads records matching the specified last name', async ({ leadPage }) => {
+  await leadPage.verifyLeadsMatchLastName();
 });
-Given('user is on View Leads page with specified lastname on filter options', async ({}) => {
-  // Step: Given user is on View Leads page with specified lastname on filter options
-  // From: Features\Leads.feature:164:5
+Given('user is on the Import Leads page', async ({ leadPage }) => {
+  await leadPage.clickLeadsOption('Import Leads');
 });
-When('user clicks the search button', async ({}) => {
-  // Step: When user clicks the search button
-  // From: Features\Leads.feature:165:5
+
+When('user selects a valid import file from TestData', async ({ leadPage }) => {
+  await leadPage.selectImportFile();
 });
-Then('User should see leads records matching the specified last name', async ({}) => {
-  // Step: Then User should see leads records matching the specified last name
-  // From: Features\Leads.feature:166:5
+
+Then('the selected file name should be displayed', async ({ leadPage }) => {
+  await leadPage.verifyImportFileSelected('leads.csv');
 });
-Given('user is on the Import Leads page', async ({}) => {
-  // Step: Given user is on the Import Leads page
-  // From: Features\Leads.feature:169:5
+
+When('user clicks the Next button without selecting a file', async ({ leadPage }) => {
+  await leadPage.clickNextWithoutImportFile();
 });
-When('user selects a valid import file from TestData', async ({}) => {
-  // Step: When user selects a valid import file from TestData
-  // From: Features\Leads.feature:170:5
-});
-Then('the selected file name should be displayed', async ({}) => {
-  // Step: Then the selected file name should be displayed
-  // From: Features\Leads.feature:171:5
-});
-When('user clicks the Next button without selecting a file', async ({}) => {
-  // Step: When user clicks the Next button without selecting a file
-  // From: Features\Leads.feature:175:5
-});
-Then('user should see a file validation message', async ({}) => {
-  // Step: Then user should see a file validation message
-  // From: Features\Leads.feature:176:5
+
+Then('user should see a file validation message', async ({ leadPage }) => {
+  await leadPage.verifyImportFileValidationMessage();
 });

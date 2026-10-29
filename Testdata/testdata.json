@@ -1,0 +1,62 @@
+{
+  "urls": {
+    "Create Lead": "https://suite8demo.suiteondemand.com/#/leads/edit?return_module=Leads&return_action=DetailView",
+    "Create Lead From vCard": "https://suite8demo.suiteondemand.com/#/leads/importvcard",
+    "View Leads": "https://suite8demo.suiteondemand.com/#/leads/index?return_module=Leads&return_action=DetailView",
+    "Import Leads": "https://suite8demo.suiteondemand.com/#/import/step1?import_module=Leads&return_module=Leads&return_action=index",
+    "Create Quote": "https://suite8demo.suiteondemand.com/#/quotes/edit?return_module=AOS_Quotes&return_action=DetailView",
+    "View Quotes": "https://suite8demo.suiteondemand.com/#/quotes/index?return_module=AOS_Quotes&return_action=DetailView",
+    "Import": "https://suite8demo.suiteondemand.com/#/import/step1?import_module=AOS_Quotes&return_module=AOS_Quotes&return_action=index",
+    "Import Line Items": "https://suite8demo.suiteondemand.com/#/import/step1?import_module=AOS_Products_Quotes&return_module=AOS_Quotes&return_action=index"
+  },
+  "InvalidUser": {
+    "username": "invalid-user",
+    "password": "incorrect-password"
+  },
+  "EmptyUsername": {
+    "username": "",
+    "password": "will"
+  },
+  "EmptyPassword": {
+    "username": "will",
+    "password": ""
+  },
+  "EmptyCredentials": {
+    "username": "",
+    "password": ""
+  },
+  "validLead": {
+    "firstName": "John",
+    "lastName": "Smith",
+    "title": "QA Engineer",
+    "email": "john.smith@example.com",
+    "mobile": "9876543210",
+    "officePhone": "9195551234"
+  },
+  "invalidEmail": {
+    "email": "invalid-email",
+    "expectedMessage": "Invalid email format. Expected: 'example@example.org'"
+  },
+  "invalidMobile": {
+    "mobile": "abc123",
+    "expectedMessage": "Invalid phone format."
+  },
+  "invalidOfficePhone": {
+    "officePhone": "abc123",
+    "expectedMessage": "Invalid phone format."
+  },
+  "updatedJobTitle": {
+    "JobTitle": "Senior QA Engineer"
+  },
+  "invalidQuote": {
+    "title": "",
+    "validUntil": "2020"
+  },
+  "validQuote": {
+    "title": "Playwright Test Quote",
+    "validUntil": "2026-12-31"
+  },
+  "updatedQuote": {
+    "title": "Updated Playwright Test Quote"
+  }
+}

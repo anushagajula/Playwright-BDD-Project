@@ -1,12 +1,13 @@
 import winston from 'winston';
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+//import { fileURLToPath } from 'node:url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+//const __filename = fileURLToPath(import.meta.url);
+//const __dirname = path.dirname(__filename);
 
-const logDir = path.resolve(__dirname, '../Logs');
+//const logDir = path.resolve(__dirname, '../Logs');
+const logDir = path.resolve(process.cwd(), 'Logs');
 
 // Create Logs folder if it doesn't exist.
 fs.mkdirSync(logDir, { recursive: true });
