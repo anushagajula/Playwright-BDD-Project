@@ -10,7 +10,7 @@ import {OpportunitiesPage} from '../Pages/OpportunitiesPage.js';
 export const test = base.extend({
   contactsPage: async ({ page }, use) => {
   const contactsPage = new ContactsPage(page);
-  await use(contactsPage);
+   await use(contactsPage);
 },
 
   opportunitiesPage: async ({ page }, use) => {

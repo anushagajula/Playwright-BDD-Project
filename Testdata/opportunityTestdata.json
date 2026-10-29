@@ -1,0 +1,20 @@
+{
+"opportunities":
+    {
+    "Validdata":
+        {
+        "OPPORTUNITY Name":"Automation Test Opportunity",
+        "OPPORTUNITY AMOUNT":"25000",
+        "SALES STAGE":"Prospecting",
+        "PROBABILITY (%)":"10",
+        "ACCOUNT NAME":"Sandeon Consolidation Corp",
+         "EXPECTED CLOSE DATE": "2026-11-30"       
+        },
+    "Invaliddata":
+    {
+        "OPPORTUNITY AMOUNT": "abc",
+        "PROBABILITY (%)": "150",
+        "EXPECTED CLOSE DATE": "invalid-date"
+    }
+    }
+}
