@@ -480,9 +480,9 @@ async getQuoteImportFileInput() {
 }
 
 async selectQuoteImportFile(fileName) {
-  const filePath = path.resolve(
-    path.dirname(fileURLToPath(import.meta.url)),
-    '..',
+  const filePath = path.resolve(process.cwd(),
+    // path.dirname(fileURLToPath(import.meta.url)),
+    // '..',
     'Testdata',
     fileName
   );

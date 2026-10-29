@@ -186,7 +186,7 @@ Then('user should see the following features in the View Leads page:', async ({l
 }
 });
 
-When('User clicks on Bulk Action drop down', async ({leadPage}) => {
+When('User clicks on Bulk Action drop down on Page', async ({leadPage}) => {
  await leadPage.clickBulkActionDropdown();
 });
 

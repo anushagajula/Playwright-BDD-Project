@@ -134,7 +134,7 @@ Scenario: verify user able to see features on View Leads page
 @bulkactiondropdown
 Scenario: Verify User able to see Bulk Action drop down
     Given user is on View Leads page
-    When User clicks on Bulk Action drop down
+    When User clicks on Bulk Action drop down on Page
     Then User able to see the following options in the Bulk Action drop down:
       | Bulk Action drop down options |
       | Delete                        |

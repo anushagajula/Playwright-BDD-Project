@@ -22,7 +22,12 @@ Given('the user is on the SuiteCRM Import Accounts page', async ({ loginPage, ac
 });
 
 When('the user uploads a valid accounts data file and clicks the next button', async ({ accountsPage }) => {
-    const filePath = fileURLToPath(new URL('../Testdata/importfile.csv', import.meta.url));
+    //const filePath = fileURLToPath(new URL('../Testdata/importfile.csv', import.meta.url));
+    const filePath = path.resolve(
+      process.cwd(),
+      'Testdata',
+      'importfile.csv'
+    );
     await accountsPage.uploadAccountsFileAndContinue(filePath);
 });
 
