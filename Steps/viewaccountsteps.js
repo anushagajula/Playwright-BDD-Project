@@ -18,12 +18,12 @@ Then(/^User should be able to view all (.+)$/, async ({ accountsPage }, accountD
 });
 
 Given('the user is on the View Account page', async ({ loginPage, accountsPage }) => {
-    const credentials = loginTestData.ValidUser;
-    await loginPage.login(credentials.username, credentials.password);
-    await loginPage.verifyHomePage();
-    await accountsPage.clickViewAccounts();
-    await accountsPage.verifyViewAccountsPage();
-
+  const credentials = loginTestData.ValidUser;
+  await loginPage.navigateToLoginPage();
+  await loginPage.login(credentials.username, credentials.password);
+  await loginPage.verifyHomePage();
+  await accountsPage.clickViewAccounts();
+  await accountsPage.verifyViewAccountsPage();
 });
 
 When(

@@ -103,9 +103,13 @@ this.validUntil = this.quoteFrame
     this.headerBulkActionButton = this.page
       .locator('scrm-table-header')
       .getByRole('button', { name: 'Bulk Action', exact: true });
-    this.recentlyViewed = this.page.getByText('Recently Viewed', {
-      exact: true
-    });
+    // this.recentlyViewed = this.page.getByText('Recently Viewed', {
+    //   exact: true
+    // });
+    this.recentlyViewed = this.page
+  .locator('a')
+  .filter({ hasText: /^Recently Viewed$/ })
+  .first();
   }
   //===========================================Methods======================================
   async login() {

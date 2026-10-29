@@ -8,10 +8,11 @@ const { Given, When, Then } = createBdd(test);
 
 
 Given('User should be on the Create Account page', async ({ loginPage, accountsPage }) => {
-    const credentials = loginTestData.ValidUser;
-    await loginPage.login(credentials.username, credentials.password);
-    await loginPage.verifyHomePage();
-    await accountsPage.clickCreateAccount();
+  const credentials = loginTestData.ValidUser;
+  await loginPage.navigateToLoginPage();
+  await loginPage.login(credentials.username, credentials.password);
+  await loginPage.verifyHomePage();
+  await accountsPage.clickCreateAccount();
 });
 
 When('User places the mouse on the Accounts module in the navigation bar', async ({ accountsPage }) => {

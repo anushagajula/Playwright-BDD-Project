@@ -92,9 +92,12 @@ export class LeadPage {
       .locator('scrm-table-header')
       .getByRole('button', { name: 'Bulk Action', exact: true });
 
-    this.selectRecordsMenuButton = this.page
+    /*this.selectRecordsMenuButton = this.page
   .locator('scrm-table-header')
-  .locator('button[aria-hidden="true"]');
+  .locator('button[aria-hidden="true"]');*/
+  this.selectRecordsMenuButton = this.page
+  .locator('scrm-bulk-action-menu')
+  .getByRole('button', { name: 'Select Action Menu', exact: true });
   this.filterButton = this.page.getByRole('button', {
       name: 'Filter',
       exact: true
