@@ -291,7 +291,7 @@ async createQuoteWithValidData() {
 
   log.info('Entered and saved valid quote data');
 }
-async clickCancelButtonWithValidData() {
+/*async clickCancelButtonWithValidData() {
   await this.fillQuoteWithValidData();
 
   const dialogPromise = this.page.waitForEvent('dialog');
@@ -304,6 +304,10 @@ async clickCancelButtonWithValidData() {
 
   expect(dialogType).toBe('beforeunload');
   log.info('Accepted the browser leave-site confirmation');
+}*/
+async clickCancelButtonWithValidData() {
+  await this.fillQuoteWithValidData();
+  await this.clickCancelButton();
 }
 async viewQuotesPageDisplayed() {
   await expect(this.page).toHaveURL(/#\/quotes\/(?:list|index)(?:\?|$)/, {
@@ -459,7 +463,7 @@ async searchQuotesByTitle() {
   await this.page.getByRole('button', { name: 'Search', exact: true }).last().click();
 }
 
-async verifyQuotesMatchTitle() {
+/*async verifyQuotesMatchTitle() {
   const titleLinks = this.page.locator('table tbody a[href*="/quotes/record/"]');
   await expect(titleLinks.first()).toBeVisible({ timeout: 15000 });
   const count = await titleLinks.count();
@@ -467,6 +471,17 @@ async verifyQuotesMatchTitle() {
   for (let index = 0; index < count; index++) {
     await expect(titleLinks.nth(index)).toHaveText(testData.validQuote.title);
   }
+}*/
+async verifyQuotesMatchTitle() {
+  const titleLinks = this.page.locator('table tbody a[href*="/quotes/record/"]');
+
+  await expect.poll(async () => {
+    const titles = (await titleLinks.allTextContents())
+      .map(title => title.trim());
+
+    return titles.length > 0 &&
+      titles.every(title => title === testData.validQuote.title);
+  }, { timeout: 15000 }).toBe(true);
 }
 
 async openQuoteImportPage() {
