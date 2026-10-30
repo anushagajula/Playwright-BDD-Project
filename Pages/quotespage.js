@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import log from '../Utils/logger.js';
 import testData from '../Testdata/testdata.json' with { type: 'json' };
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+
 export class QuotesPage {
   constructor(page) {
     this.page = page;
@@ -102,14 +102,9 @@ this.validUntil = this.quoteFrame
     });
     this.headerBulkActionButton = this.page
       .locator('scrm-table-header')
-      .getByRole('button', { name: 'Bulk Action', exact: true });
-    // this.recentlyViewed = this.page.getByText('Recently Viewed', {
-    //   exact: true
-    // });
-  //   this.recentlyViewed = this.page
-  // .locator('a')
-  // .filter({ hasText: /^Recently Viewed$/ })
-  // .first();
+      .getByRole('button', { name: 'Bulk Action', exact: true 
+
+      });
   this.recentlyViewed = this.page.getByText('Recently Viewed', {
   exact: true
 }).first();
@@ -254,19 +249,7 @@ async verifyQuoteErrorMessage(message) {
     this.quoteFrame.getByText(message, { exact: true })
   ).toBeVisible({ timeout: 10000 });
 }
-// async createQuoteWithValidData() {
-//     const data = testData.validQuote;
 
-//     await this.title.click();
-//     await this.title.fill(data.title);
-
-//     await this.validUntil.click();
-//     await this.validUntil.fill(data.validUntil);
-
-//     await this.saveButton.click();
-
-//     log.info('Entered valid quote data');
-// }
 async verifyNewQuoteCreated() {
   await expect(this.page).toHaveURL(/#\/quotes\/record\//, {
     timeout: 15000
@@ -295,20 +278,7 @@ async createQuoteWithValidData() {
 
   log.info('Entered and saved valid quote data');
 }
-/*async clickCancelButtonWithValidData() {
-  await this.fillQuoteWithValidData();
 
-  const dialogPromise = this.page.waitForEvent('dialog');
-  const cancelClick = this.clickCancelButton();
-
-  const dialog = await dialogPromise;
-  const dialogType = dialog.type();
-  await dialog.accept();
-  await cancelClick;
-
-  expect(dialogType).toBe('beforeunload');
-  log.info('Accepted the browser leave-site confirmation');
-}*/
 async clickCancelButtonWithValidData() {
   await this.fillQuoteWithValidData();
   await this.clickCancelButton();
@@ -467,15 +437,6 @@ async searchQuotesByTitle() {
   await this.page.getByRole('button', { name: 'Search', exact: true }).last().click();
 }
 
-/*async verifyQuotesMatchTitle() {
-  const titleLinks = this.page.locator('table tbody a[href*="/quotes/record/"]');
-  await expect(titleLinks.first()).toBeVisible({ timeout: 15000 });
-  const count = await titleLinks.count();
-  expect(count).toBeGreaterThan(0);
-  for (let index = 0; index < count; index++) {
-    await expect(titleLinks.nth(index)).toHaveText(testData.validQuote.title);
-  }
-}*/
 async verifyQuotesMatchTitle() {
   const titleLinks = this.page.locator('table tbody a[href*="/quotes/record/"]');
 
@@ -504,8 +465,6 @@ async getQuoteImportFileInput() {
 
 async selectQuoteImportFile(fileName) {
   const filePath = path.resolve(process.cwd(),
-    // path.dirname(fileURLToPath(import.meta.url)),
-    // '..',
     'Testdata',
     fileName
   );
@@ -581,34 +540,6 @@ async hoverRecentlyViewed() {
   await this.recentlyViewed.hover();
 }
 
-/*async verifyRecentQuoteDisplayed() {
-  const recentQuoteLink = this.recentlyViewed
-    .locator('xpath=ancestor::li[1]')
-    .getByRole('link')
-    .first();
-  await expect(recentQuoteLink).toBeVisible({ timeout: 10000 });
-  await expect(recentQuoteLink).toHaveText(
-    new RegExp(`^${testData.validQuote.title.slice(0, 15)}`)
-  );
-  await expect(recentQuoteLink).toHaveAttribute('href', /#\/quotes\/record\//);
-}
-async verifyRecentQuoteDisplayed() {
-  const expectedTitle = testData.validQuote.title.slice(0, 15);
-
-  const recentQuoteLink = this.recentlyViewed
-    .locator('xpath=ancestor::li[1]')
-    .getByRole('link')
-    .filter({ hasText: expectedTitle });
-
-  await expect(recentQuoteLink).toBeVisible({
-    timeout: 10000
-  });
-
-  await expect(recentQuoteLink).toHaveAttribute(
-    'href',
-    /#\/quotes\/record\//
-  );
-}*/
 async prepareRecentlyViewedQuote() {
   await this.createNewQuoteRecord();
   this.recentQuotePath = new URL(this.page.url()).hash;

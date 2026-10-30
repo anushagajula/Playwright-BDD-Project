@@ -1,4 +1,3 @@
-
 import { createBdd } from 'playwright-bdd';
 import { test } from '../Fixtures/fixture.js';
 import testData from '../Testdata/testdata.json' with { type: 'json' };
@@ -80,7 +79,6 @@ Given('user is on new Lead record page', async ({leadPage}) => {
 await leadPage.clickLeadsOption('Create Lead');
 await leadPage.fillValidLeadData();
 await leadPage.clicksaveButton();
-  //await leadPage.openExistingLead(fullName);
 });
 
 
@@ -135,7 +133,6 @@ Given('User is on  create Lead from Vcard page', async ({leadPage}) => {
 });
 
 When('User selects Vcard file', async ({leadPage}) => {
-  //await leadPage.clickChooseFileButton();
   await leadPage.selectVcardFile('lead.vcf');
 });
 
@@ -229,10 +226,6 @@ Then('the last name should be displayed in the filter field', async ({ leadPage 
 });
 
 Given('user is on View Leads page with specified lastname on filter options', async ({ leadPage }) => {
-//     await leadPage.clickLeadsOption('Create Lead');
-// await leadPage.createLeadWithValidData();
-// await leadPage.verifyNewCreatedLeadRecordisDisplayed();
-
 await leadPage.clickLeadsOption('View Leads');
 await leadPage.openLeadFilters();
 await leadPage.enterLastNameFilter(testData.validLead.lastName);

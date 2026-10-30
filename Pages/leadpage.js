@@ -2,7 +2,6 @@ import { expect } from '@playwright/test';
 import log from '../Utils/logger.js';
 import testData from '../Testdata/testdata.json' with { type: 'json' };
 import path from 'node:path';
-//import { fileURLToPath } from 'node:url';
 
 export class LeadPage {
   constructor(page) {
@@ -51,7 +50,6 @@ export class LeadPage {
     this.cancelButton = this.page.getByRole('button', {
       name: 'Cancel', exact: true
     });
-    // In the constructor
     this.overviewTab = this.page.getByRole('tab', {
       name: 'OVERVIEW',
       exact: true
@@ -88,12 +86,11 @@ export class LeadPage {
       .locator('td')
       .first();
 
-    this.headerBulkActionButton = this.page.locator('scrm-table-header').getByRole('button', { name: 'Bulk Action' });
+    this.headerBulkActionButton = this.page.locator('scrm-table-header').getByRole('button', { 
+      name: 'Bulk Action' 
+    });
 
-    this.selectRecordsMenuButton = this.page.locator('scrm-table-header').getByLabel('Select Action Menu');
-  /*this.selectRecordsMenuButton = this.page
-  .locator('scrm-bulk-action-menu')
-  .getByRole('button', { name: 'Select Action Menu', exact: true });*/
+  this.selectRecordsMenuButton = this.page.locator('scrm-table-header').getByLabel('Select Action Menu');
   this.filterButton = this.page.getByRole('button', {
       name: 'Filter',
       exact: true
@@ -128,16 +125,14 @@ export class LeadPage {
       .getByText('JOB TITLE', { exact: true })
       .locator('xpath=ancestor::div[.//input][1]')
       .locator('input');
-
-   // Selection dropdown button
-this.selectionDropdown = this.page
+  this.selectionDropdown = this.page
   .locator('scrm-table-header')
   .locator('button[aria-label="Select Action Menu"]');
 
-// Select This Page option (header menu only)
-this.thisPageOption = this.page.locator('scrm-table-header a').filter({ hasText: 'Select This Page' });
+this.thisPageOption = this.page.locator('scrm-table-header a').filter({ 
+  hasText: 'Select This Page' 
+});
 
-// Bulk Action button
 this.headerBulkActionButton = this.page
   .locator('scrm-table-header')
   .getByRole('button', {
@@ -145,35 +140,9 @@ this.headerBulkActionButton = this.page
     exact: true
   });
 
-// Header selection checkbox
 this.headerSelectionCheckbox = this.selectionDropdown
   .locator('input[type="checkbox"]');
   }
-  
-
-  /*async login() {
-    const url = process.env.SCRM_URL;
-    const username = process.env.SCRM_USERNAME;
-    const password = process.env.SCRM_PASSWORD;
-
-    if (!url || !username || !password) {
-      throw new Error(
-        'SCRM_URL, SCRM_USERNAME, and SCRM_PASSWORD must be set in .env'
-      );
-    }
-
-    await this.page.goto(url);
-
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
-    await this.loginButton.click();
-
-    await expect(this.leadsMenu).toBeVisible({
-      timeout: 30000
-    });
-
-    log.info('Login successful');
-  }*/
 
   async verifyHomePage() {
     await expect(this.leadsMenu).toBeVisible({ timeout: 30000 });
@@ -484,17 +453,7 @@ this.headerSelectionCheckbox = this.selectionDropdown
 
     return iframes.nth(matchingIndex).contentFrame();
   }
- /* async selectVcardFile(fileName) {
-    const filePath = fileURLToPath(
-      new URL(`../Testdata/${fileName}`, import.meta.url)
-    );
-    const frame = await this.getVcardFrame();
-    const fileInput = frame.locator('input[type="file"]');
-
-    await expect(fileInput).toHaveCount(1);
-    await fileInput.setInputFiles(filePath);
-  }*/
-   async selectVcardFile(fileName) {
+ async selectVcardFile(fileName) {
   const filePath = path.resolve(
     process.cwd(),
     'Testdata',
@@ -640,19 +599,7 @@ async verifyCurrentPageLeadsSelected() {
     await this.page.getByRole('button', { name: 'Search', exact: true }).last().click();
   }
 
-  async verifyLeadsMatchLastName(lastName = testData.validLead.lastName) {
-    // const escapedLastName = lastName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    // const leadLinks = this.page.locator('table tbody a[href*="/leads/record/"]');
-
-    // await expect(leadLinks.first()).toBeVisible({ timeout: 15000 });
-    // const count = await leadLinks.count();
-    // expect(count).toBeGreaterThan(0);
-
-    // for (let i = 0; i < count; i++) {
-    //   await expect(leadLinks.nth(i)).toHaveText(
-    //     new RegExp(`\\b${escapedLastName}\\s*$`, 'i')
-    //   );
-    // }
+  async verifyLeadsMatchLastName() {
     await this.page.waitForTimeout(2000);
 
     // Locate Last Name column cells
@@ -677,18 +624,6 @@ async verifyCurrentPageLeadsSelected() {
   }
 }
 }
-  /*(async selectImportFile() {
-    const filePath = fileURLToPath(
-    new URL('../Testdata/leads.csv', import.meta.url)
-  );
- const fileInput = this.page
-    .frameLocator('iframe')
-    .locator('input[type="file"]');
-
-  await expect(fileInput).toHaveCount(1);
-  await fileInput.setInputFiles(filePath);
-}*/
-
   async verifyImportFileSelected(fileName) {
     const fileInput = this.page
       .frameLocator('iframe')

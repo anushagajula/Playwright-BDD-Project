@@ -6,7 +6,6 @@ export class LoginPage {
     this.page = page;
 
     this.CRMlogo = page.locator('form[name="login"] img');
-    //this.CRMlogo = page.locator('img').first();
     this.username = page.getByRole('textbox', { name: 'Username' });
     this.password = page.getByRole('textbox', { name: 'Password' });
     this.loginButton = page.getByRole('button', { name: 'Log In' });
