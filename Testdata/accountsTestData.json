@@ -1,0 +1,8 @@
+{
+  "NAME": "John Smith",
+  "WEBSITE": "https://www.example.com",
+  "OFFICE PHONE": "+1-404-555-0123",
+  "Email": "john.smith@example.com",
+  "InValidEmail": "john.smith@",
+  "VIEW_ACCOUNT_NAME": "AtoZ Co Ltd"
+}

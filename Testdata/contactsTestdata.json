@@ -1,0 +1,41 @@
+
+{
+"Contacts":
+    {
+    "Validcontact":
+        {
+        "First Name":"James",
+        "Last Name":"Anderson",
+        "OFFICE PHONE":"2025550147",
+        "MOBILE":"2025550000",
+        "JOB TITLE":"QA Engineer",
+        "DEPARTMENT":"Quality Assurance",
+        "EMAIL ADDRESS":"james.anderson@example.com",
+        "Primary Address Street":"131 Church Rd",
+        "Primary Address Postal Code":"19445",
+        "Primary Address City":"Lansdale",
+        "Primary Address State":"PA",
+        "Primary Address Country":"US"
+        },
+        
+        
+        "Invaliddata":
+        {
+        "OFFICE PHONE":"ABC123",
+        "MOBILE":"abcgds",
+        "EMAIL ADDRESS":"james.andersonexample@com"
+        }
+    }
+    }
+            
+        
+    
+
+
+
+
+    
+    
+
+
+

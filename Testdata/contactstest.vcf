@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Bermain;Smidth;;;
+FN:Smidth Bermain
+ORG:AtoZ Co Ltd
+TITLE:QA Engineer
+TEL:+1161964698
+TEL;TYPE=CELL:2025550000
+EMAIL:qa.qa.support@example.tv
+END:VCARD
