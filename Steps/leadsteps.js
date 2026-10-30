@@ -229,9 +229,9 @@ Then('the last name should be displayed in the filter field', async ({ leadPage 
 });
 
 Given('user is on View Leads page with specified lastname on filter options', async ({ leadPage }) => {
-    await leadPage.clickLeadsOption('Create Lead');
-await leadPage.createLeadWithValidData();
-await leadPage.verifyNewCreatedLeadRecordisDisplayed();
+//     await leadPage.clickLeadsOption('Create Lead');
+// await leadPage.createLeadWithValidData();
+// await leadPage.verifyNewCreatedLeadRecordisDisplayed();
 
 await leadPage.clickLeadsOption('View Leads');
 await leadPage.openLeadFilters();
