@@ -106,10 +106,14 @@ this.validUntil = this.quoteFrame
     // this.recentlyViewed = this.page.getByText('Recently Viewed', {
     //   exact: true
     // });
-    this.recentlyViewed = this.page
-  .locator('a')
-  .filter({ hasText: /^Recently Viewed$/ })
-  .first();
+  //   this.recentlyViewed = this.page
+  // .locator('a')
+  // .filter({ hasText: /^Recently Viewed$/ })
+  // .first();
+  this.recentlyViewed = this.page.getByText('Recently Viewed', {
+  exact: true
+}).first();
+
   }
   //===========================================Methods======================================
   async login() {
@@ -571,11 +575,13 @@ async prepareRecentlyViewedQuote() {
 
 async hoverRecentlyViewed() {
   await this.quotesMenu.hover();
-  await expect(this.recentlyViewed).toBeVisible();
+  await expect(this.recentlyViewed).toBeVisible({
+    timeout: 15000
+  });
   await this.recentlyViewed.hover();
 }
 
-async verifyRecentQuoteDisplayed() {
+/*async verifyRecentQuoteDisplayed() {
   const recentQuoteLink = this.recentlyViewed
     .locator('xpath=ancestor::li[1]')
     .getByRole('link')
@@ -586,4 +592,34 @@ async verifyRecentQuoteDisplayed() {
   );
   await expect(recentQuoteLink).toHaveAttribute('href', /#\/quotes\/record\//);
 }
+async verifyRecentQuoteDisplayed() {
+  const expectedTitle = testData.validQuote.title.slice(0, 15);
+
+  const recentQuoteLink = this.recentlyViewed
+    .locator('xpath=ancestor::li[1]')
+    .getByRole('link')
+    .filter({ hasText: expectedTitle });
+
+  await expect(recentQuoteLink).toBeVisible({
+    timeout: 10000
+  });
+
+  await expect(recentQuoteLink).toHaveAttribute(
+    'href',
+    /#\/quotes\/record\//
+  );
+}*/
+async prepareRecentlyViewedQuote() {
+  await this.createNewQuoteRecord();
+  this.recentQuotePath = new URL(this.page.url()).hash;
+}
+
+async verifyRecentQuoteDisplayed() {
+  const recentQuoteLink = this.recentlyViewed
+    .locator('xpath=ancestor::li[1]')
+    .locator(`a[href="${this.recentQuotePath}"]`);
+
+  await expect(recentQuoteLink).toBeVisible({ timeout: 10000 });
+}
+
 }

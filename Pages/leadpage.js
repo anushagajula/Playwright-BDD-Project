@@ -132,6 +132,29 @@ export class LeadPage {
       .getByText('JOB TITLE', { exact: true })
       .locator('xpath=ancestor::div[.//input][1]')
       .locator('input');
+
+   // Selection dropdown button
+this.selectionDropdown = this.page
+  .locator('scrm-table-header')
+  .locator('button[aria-label="Select Action Menu"]');
+
+// Select This Page option (header menu only)
+this.thisPageOption = this.page
+  .locator('scrm-table-header')
+  .locator('a')
+  .filter({ hasText: /^Select This Page$/ });
+
+// Bulk Action button
+this.headerBulkActionButton = this.page
+  .locator('scrm-table-header')
+  .getByRole('button', {
+    name: 'Bulk Action',
+    exact: true
+  });
+
+// Header selection checkbox
+this.headerSelectionCheckbox = this.selectionDropdown
+  .locator('input[type="checkbox"]');
   }
   
 
@@ -587,26 +610,15 @@ async selectImportFile() {
     }
   }
  async selectCurrentPageLeads() {
-  // Wait for the Leads table to be ready
   await expect(
     this.page.getByRole('columnheader', { name: 'Name', exact: true })
   ).toBeVisible({ timeout: 15000 });
 
-  // Open selection menu
-  await this.selectRecordsMenuButton.click();
+  await this.selectionDropdown.click();
+  await expect(this.thisPageOption).toBeVisible({ timeout: 10000 });
+  await this.thisPageOption.click();
 
-  const selectThisPage = this.page
-    .locator('scrm-table-header a')
-    .filter({ hasText: 'Select This Page' });
-
-
-  await expect(selectThisPage).toBeVisible({ timeout: 10000 });
-  await selectThisPage.click();
-
-  // Verify that selection enabled bulk actions
-  await expect(this.headerBulkActionButton).toBeEnabled({
-    timeout: 10000
-  });
+  await expect(this.headerBulkActionButton).toBeEnabled({ timeout: 10000 });
 }
 
 async verifyCurrentPageLeadsSelected() {
