@@ -42,7 +42,7 @@ When('User clicks the Save button on Basic tab by providing mandatory details', 
 });
 
 Then('User should redirected to Opportunity record details screen', async ({opportunitiesPage}) => {
-  await opportunitiesPage.verifyopportunityDetails
+  await opportunitiesPage.verifyopportunityDetails();
 });
 
 
